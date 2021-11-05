@@ -1,0 +1,96 @@
+#include <string>
+#include <iostream>
+
+#include "LoginUI.h"
+
+using namespace std;
+
+/**
+ * LoginUI
+ * 
+ * Constructor for a MainWindow object, initializes the application window
+ *
+ * @param parent optional widget parent, can be a null pointer
+ */
+LoginUI::LoginUI(QWidget *parent)
+    : QMainWindow(parent)
+{
+    // Create the username text label and position
+    usernameLabel = new QLabel("Username:", this);
+    usernameLabel->setGeometry(QRect(QPoint(12, 16), QSize(65, 15)));
+
+    // Create the username input field, position it
+    usernameInput = new QLineEdit(this);
+    usernameInput->setGeometry(QRect(QPoint(85, 12), QSize(203, 23)));
+
+    // Create the password text label and position
+    passwordLabel = new QLabel("Password:", this);
+    passwordLabel->setGeometry(QRect(QPoint(12, 51), QSize(65, 15)));
+
+    // Create the password input field, position it, and connect to the handleLogin method
+    passwordInput = new QLineEdit(this);
+    passwordInput->setGeometry(QRect(QPoint(85, 47), QSize(203, 23)));
+    connect(passwordInput, &QLineEdit::returnPressed, this, &LoginUI::handleLogin);
+
+    // Create the login button, position it, and connect to the handleLogin method
+    loginButton = new QPushButton("Login", this);
+    loginButton->setGeometry(QRect(QPoint(12, 82), QSize(276, 33)));
+    connect(loginButton, &QPushButton::released, this, &LoginUI::handleLogin);
+
+    // Create the register button, position it, and connect to the handleRegister method
+    registerButton = new QPushButton("Register", this);
+    registerButton->setGeometry(QRect(QPoint(12, 122), QSize(276, 33)));
+    connect(registerButton, &QPushButton::released, this, &LoginUI::handleRegister);
+
+    // Set the default size for the window and window title
+    setFixedSize(300, 175);
+    setWindowTitle("TypeTrails Login");
+}
+
+/**
+ * ~LoginUI
+ * 
+ * Empty destructor for a LoginUI object
+ */
+LoginUI::~LoginUI() {
+
+}
+
+/**
+ * handleLogin
+ * 
+ * Description
+ */
+void LoginUI::handleLogin()
+{
+    std::cout << "Login was pressed" << std::endl;
+    this->close();
+
+    // // Retrieve the user inputted command
+    // QString commandString = commandInput->text().trimmed();
+
+    // // Clear the input field
+    // commandInput->clear();
+
+    // // Create a command object, execute the command
+    // Command newCommand(commandString);
+    // newCommand.executeCommand();
+    
+    // // Get the execution result and render it
+    // QString result = newCommand.getResult();
+    // outputResult->setPlainText(result);
+
+    // // Render the return code from the executed command
+    // QString returnCode = newCommand.getReturnCode();
+    // exitLabel->setText("Exit status:  " + returnCode);
+}
+
+/**
+ * handleRegister
+ * 
+ * Description
+ */
+void LoginUI::handleRegister()
+{
+    std::cout << "Register was pressed" << std::endl;
+}
