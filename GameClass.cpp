@@ -14,7 +14,10 @@ GameClass::GameClass(TextObject *text){
 
 bool GameClass::keyPress(char character, int index){
     this->currentIndex = index;
-    this->progressPercent = index/gameText->getTotalChars();
+    cout << index << endl;
+    this->progressPercent = static_cast<float>(index)/gameText->getTotalChars();
+    cout << gameText->getTotalChars() << endl;
+    cout << progressPercent*100 << endl;
     this->endTime = time(0);
     if (gameText->getText()[index] == character){
         return true;
@@ -33,7 +36,7 @@ vector<int> GameClass::getGameStats(){
 }
 
 int GameClass::getProgress(){
-    return this->progressPercent*100;
+    return static_cast<int>(this->progressPercent*100);
 }
 
 int GameClass::calculateWpm(){
