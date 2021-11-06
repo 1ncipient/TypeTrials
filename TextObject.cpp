@@ -3,6 +3,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <cctype>
 #include <array>
 #include <sstream>
 #include <vector>
@@ -79,8 +80,7 @@ string apiCall(string inputString)
     }
 
     // strip white space at the beginning and end
-    std::string::iterator end_pos = std::remove(shortResult.begin(), shortResult.end(), ' ');
-    shortResult.erase(end_pos, shortResult.end());
+    shortResult.erase(remove(shortResult.begin(), shortResult.end(), ' '), shortResult.end());
 
     return shortResult;
 }
