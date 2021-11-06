@@ -1,6 +1,11 @@
 #ifndef GAMECLASS_H
 #define GAMECLASS_H
 
+#include <string>
+#include <vector>
+
+using namespace std;
+
 class GameClass {
     private:
         TextObject gameText;
@@ -15,10 +20,10 @@ class GameClass {
 
     public:
         GameClass(TextObject text);
-        bool keyPress(String character, int index);
-        void updateStats(String userID);
+        bool keyPress(string character, int index);
+        void updateStats(string userID);
         vector<int> getGameStats();
         float getProgress();
         ~GameClass();
-}
+};
 #endif // GAMECLASS_H

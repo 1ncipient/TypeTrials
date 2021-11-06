@@ -1,5 +1,5 @@
 #include <ctime>
-#include GameClass.h
+#include "GameClass.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ GameClass::GameClass(TextObject text){
     this->startTime = time(0);
 }
 
-bool GameClass::keyPress(String character, int index){
+bool GameClass::keyPress(string character, int index){
     this->currentIndex = index;
     this->progressPercent = index/TextObject.getText().length();
     this->endTime = time(0);
@@ -21,7 +21,7 @@ bool GameClass::keyPress(String character, int index){
     return false;
 }
 
-void GameClass::updateStats(String userID){
+void GameClass::updateStats(string userID){
 
 }
 
@@ -31,7 +31,7 @@ vector<int> GameClass::getGameStats(){
 }
 
 float GameClass::getProgress(){
-    return this->progressPercent*100.0
+    return this->progressPercent*100.0;
 }
 
 int GameClass::calculateWpm(){
@@ -39,7 +39,7 @@ int GameClass::calculateWpm(){
     long int end = static_cast<long int> (this->endTime);
     long int duration = end - start;
     int totalTime = duration;
-    int wpm = (this->currentIndex/totalTime)*60
+    int wpm = (this->currentIndex/totalTime)*60;
     return wpm;
 }
 
