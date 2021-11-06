@@ -27,41 +27,41 @@ StatsObject::~StatsObject(){
 /**
  * Setter method for variable wpm. Using the parameter wpm, this object's instance of wpm will be set to the whatever is passed in the parameter.
  */
-void StatsObject::setWpm (int wpm){
-    this->wpm = wpm;
+void StatsObject::updateWpm (int wpm){
+    this->wpm = ((this->wpm * this->totalGames) + wpm) / (this->totalGames + 1);
 }
 
 /**
  * Setter method for variable totalGames. Using the parameter totalGames, this object's instance of totalGames will be set to the whatever is passed in the parameter.
  */
-void StatsObject::setTotalGames (int totalGames){
-    this->totalGames = totalGames;
+void StatsObject::incrementTotalGames (){
+    this->totalGames++;
 }
 
 /**
  * Setter method for variable totalWords. Using the parameter totalWords, this object's instance of totalWords will be set to the whatever is passed in the parameter.
  */
-void StatsObject::setTotalWords (int totalWords){
-    this->totalWords = totalWords;
+void StatsObject::incrementTotalWords (int totalWords){
+    this->totalWords += totalWords;
 }
 
 /**
  * Setter method for variable totalChars. Using the parameter totalChars, this object's instance of totalChars will be set to the whatever is passed in the parameter.
  */
-void StatsObject::setTotalChars (int totalChars){
-    this->totalChars = totalChars;
+void StatsObject::incrementTotalChars (int totalChars){
+    this->totalChars += totalChars;
 }
 
 /**
  * Setter method for variable totalWrongChars. Using the parameter totalWrongChars, this object's instance of totalWrongChars will be set to the whatever is passed in the parameter.
  */
-void StatsObject::setTotalWrongChars(int totalWrongChars){
-    this->totalWrongChars = totalWrongChars;
+void StatsObject::incrementTotalWrongChars(int totalWrongChars){
+    this->totalWrongChars += totalWrongChars;
 }
 
 /**
  * Setter method for variable accuracy. Using the parameter accuracy, this object's instance of accuracy will be set to the whatever is passed in the parameter.
  */
-void StatsObject::setAccuracy(float accuracy){
-    this->accuracy = accuracy;
+void StatsObject::updateAccuracy(float accuracy){
+    this->accuracy = ((this->accuracy * this->totalGames) + accuracy) / (this->totalGames + 1);
 }

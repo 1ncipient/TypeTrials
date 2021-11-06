@@ -61,32 +61,32 @@ class StatsObject {
     /**
     * Setter method for variable wpm. Using the parameter wpm, this objects wpm variable is set to whatever is in the parameter variable.
     */
-    void setWpm(int wpm);
+    void updateWpm(int wpm);
 
     /**
     * Setter method for variable totalGames. Using the parameter totalGames, this objects totalGames variable is set to whatever is in the parameter variable.
     */
-    void setTotalGames(int totalGames);
+    void incrementTotalGames();
 
     /**
     * Setter method for variable totalWords. Using the parameter totalWords, this objects totalWords variable is set to whatever is in the parameter variable.
     */
-    void setTotalWords(int totalWords);
+    void incrementTotalWords(int totalWords);
 
     /**
     * Setter method for variable totalChars. Using the parameter totalChars, this objects totalChars variable is set to whatever is in the parameter variable.
     */
-    void setTotalChars(int totalChars);
+    void incrementTotalChars(int totalChars);
 
     /**
     * Setter method for variable totalWrongChars. Using the parameter totalWrongChars, this objects totalWrongChars variable is set to whatever is in the parameter variable.
     */
-    void setTotalWrongChars(int totalWrongChars);
+    void incrementTotalWrongChars(int totalWrongChars);
 
     /**
     * Setter method for variable accuracy. Using the parameter accuracy, this objects accuracy variable is set to whatever is in the parameter variable.
     */
-    void setAccuracy(float accuracy);
+    void updateAccuracy(float accuracy);
 };
 
 #endif
