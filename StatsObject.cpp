@@ -46,6 +46,13 @@ void StatsObject::setTotalWords (int totalWords){
 }
 
 /**
+ * Setter method for variable totalChars. Using the parameter totalChars, this object's instance of totalChars will be set to the whatever is passed in the parameter.
+ */
+void StatsObject::setTotalChars (int totalChars){
+    this->totalChars = totalChars;
+}
+
+/**
  * Setter method for variable totalWrongChars. Using the parameter totalWrongChars, this object's instance of totalWrongChars will be set to the whatever is passed in the parameter.
  */
 void StatsObject::setTotalWrongChars(int totalWrongChars){
@@ -55,6 +62,6 @@ void StatsObject::setTotalWrongChars(int totalWrongChars){
 /**
  * Setter method for variable accuracy. Using the parameter accuracy, this object's instance of accuracy will be set to the whatever is passed in the parameter.
  */
-void StatsObject:: setAccuracy(float accuracy){
+void StatsObject::setAccuracy(float accuracy){
     this->accuracy = accuracy;
 }
