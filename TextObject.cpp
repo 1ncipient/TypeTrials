@@ -67,8 +67,8 @@ string apiCall(string inputString)
     shortResult += resultSentences.at(vecSize - 1) + ".";
 
     // remove remaining unicode encoding
-    std::string arr[] = {"\\u005cn", "\\u005c", "\\u0022", "\\u2014", "u005cn", "u005c", "u0022", "u2014"};
-    vector<string> targets(arr, arr + sizeof(arr)/sizeof(std::string));
+    string arr[] = {"\\u005cn", "\\u005c", "\\u0022", "\\u2014", "u005cn", "u005c", "u0022", "u2014"};
+    vector<string> targets(arr, arr + sizeof(arr)/sizeof(string));
     replaceAll(shortResult, targets, " ");
 
     // replace all adjacent spaces with a single space
