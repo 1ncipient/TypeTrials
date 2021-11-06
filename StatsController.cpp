@@ -40,21 +40,18 @@ StatsObject StatsController::getStats(string userID){
         }
     }
 
-    // user doesn't exist
+    // if user doesn't exist, default initalize to 0 value
     if (dataTokens.size() == 0){
-          cout << "user doesn't exist";
+        StatsObject statsObj;
+        userStats = statsObj;
+    }
+    // else create stats object from data
+    else {        
+        StatsObject statsObj(stoi(dataTokens[1]), stoi(dataTokens[2]), stoi(dataTokens[3]), stoi(dataTokens[4]), stoi(dataTokens[5]), stof(dataTokens[6]));
+        userStats = statsObj;
     }
 
-    // update stats object from data
-    userStats.setWpm(stoi(dataTokens[1]));
-    userStats.setTotalGames(stoi(dataTokens[2]));
-    userStats.setTotalWords(stoi(dataTokens[3]));
-    userStats.setTotalChars(stoi(dataTokens[4]));
-    userStats.setTotalWrongChars(stoi(dataTokens[5]));
-    userStats.setAccuracy(stof(dataTokens[6]));
-
     statsData.close();
-
     return userStats;
 }
 
