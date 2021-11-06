@@ -95,7 +95,7 @@ void StatsController::setStats(string userID, StatsObject newStats){
     tempFile.close();
     statsData.close();
     remove(dataFile.c_str());
-    rename("temp.txt", dataFile.c_str());
+    rename("tempstats.txt", dataFile.c_str());
 
     userStats = newStats;
 }
