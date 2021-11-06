@@ -16,7 +16,7 @@ class MainUI : public QMainWindow
     Q_OBJECT
     
     public:
-        explicit MainUI(QWidget *parent = nullptr);
+        explicit MainUI(std::string username, QWidget *parent = nullptr);
         ~MainUI();
 
     private slots:
@@ -26,6 +26,8 @@ class MainUI : public QMainWindow
         // void finishedGame();
 
     private:
+        string userID;
+        StatsController *statisticsAccess;
         GameClass *game;
         QLineEdit *topicSelection;
         QPushButton *playButton;
