@@ -56,9 +56,9 @@ string apiCall(string inputString)
     // escape all JSON characters that were returned
     result = escapeJson(result);
 
-    // trim the result to a maximum four sentences
+    // trim the result to a maximum three sentences
     vector<string> resultSentences = split(result, ".");
-    int vecSize = min(4, (int)resultSentences.size());
+    int vecSize = min(3, (int)resultSentences.size());
     string shortResult = "";
     for (int i = 0; i < vecSize - 1; i++)
     {
@@ -77,6 +77,10 @@ string apiCall(string inputString)
     {
     shortResult.replace(pos, 2, " ");
     }
+
+    // strip white space at the beginning and end
+    std::string::iterator end_pos = std::remove(shortResult.begin(), shortResult.end(), ' ');
+    shortResult.erase(end_pos, shortResult.end());
 
     return shortResult;
 }
