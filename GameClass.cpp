@@ -1,9 +1,10 @@
 #include <ctime>
 #include "GameClass.h"
+#include <iostream>
 
 using namespace std;
 
-GameClass::GameClass(TextObject text){
+GameClass::GameClass(TextObject *text){
     this->gameText = text;
     this->missedChars = 0;
     this->progressPercent = 0.0;
@@ -11,27 +12,28 @@ GameClass::GameClass(TextObject text){
     this->startTime = time(0);
 }
 
-bool GameClass::keyPress(string character, int index){
+bool GameClass::keyPress(char character, int index){
     this->currentIndex = index;
-    this->progressPercent = index/TextObject.getText().length();
+    this->progressPercent = index/gameText->getTotalChars();
     this->endTime = time(0);
-    if (TextObject.getText()[index] == character){
+    if (gameText->getText()[index] == character){
         return true;
     }
+    missedChars++;
     return false;
 }
 
-void GameClass::updateStats(string userID){
+// void GameClass::updateStats(string userID){
 
-}
+// }
 
 vector<int> GameClass::getGameStats(){
     vector<int> statistics = {this->calculateWpm(), this->calculateRaceTime(), this->missedChars};
     return statistics;
 }
 
-float GameClass::getProgress(){
-    return this->progressPercent*100.0;
+int GameClass::getProgress(){
+    return this->progressPercent*100;
 }
 
 int GameClass::calculateWpm(){
