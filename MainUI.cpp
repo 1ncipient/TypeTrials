@@ -48,6 +48,7 @@ MainUI::MainUI(QWidget *parent)
     typedText = new QLineEdit(this);
     typedText->setGeometry(QRect(QPoint(25, 385), QSize(900, 40)));
     typedText->setStyleSheet("font: 20px");
+    typedText->setReadOnly(true);
     connect(typedText, &QLineEdit::textEdited, this, &MainUI::onInput);
     // example connect function
     // connect(passwordInput, &QLineEdit::returnPressed, this, &MainUI::handleLogin);
@@ -85,6 +86,11 @@ void MainUI::startGame()
 {
     std::cout << "Game was started" << std::endl;
     std::cout << "User topic is: " << topicSelection->text().toStdString() << std::endl;
-    TextObject *test = new TextObject("I just want to eat a banana.");
+    TextObject *test = new TextObject(topicSelection->text().toStdString());
     game = new GameClass(test);
+    typedText->setReadOnly(false);
+    gameText->setText(QString::fromStdString(test->getText()));
+    typedText->setText("");
+    topicSelection->setText("");
+
 }

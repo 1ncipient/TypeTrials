@@ -12,7 +12,7 @@ class GameClass {
         TextObject *gameText;
         int missedChars;
         time_t startTime, endTime;
-        int progressPercent;
+        float progressPercent;
         //StatsController statistics Access;
         int currentIndex;
 
