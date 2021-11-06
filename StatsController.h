@@ -15,6 +15,8 @@ class StatsController: public DatabaseController {
         ~StatsController();
 
         // Getters/Setters for data members
-        std::string getStats(std::string);
+        StatsObject getStats(std::string);
         void setStats(std::string, StatsObject);
 };
+
+#endif

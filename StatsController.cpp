@@ -21,7 +21,7 @@ StatsObject StatsController::getStats(string userID){
     ifstream statsData;
     statsData.open(dataFile);
 
-    if !dataFile{
+    if (!statsData.is_open()){
         cout<<"File doesn't exist";
     }
 
@@ -29,11 +29,12 @@ StatsObject StatsController::getStats(string userID){
     vector<string> dataTokens;
 
     // search for ID from file and store data into vector
+    string line;
 	while (getline(statsData, line)){
         if (line.find(userID) != string::npos) {
             stringstream ss(line);
             string item;
-            while (getline (ss, item, ",")) {
+            while (getline (ss, item, ',')) {
                  dataTokens.push_back(item);
             }
         }
@@ -62,14 +63,14 @@ void StatsController::setStats(string userID, StatsObject newStats){
     // file format: userID,wpm,totalgames,totalwords,totalchars,totalwrongchars,accuracy
     ifstream statsData;
     statsData.open(dataFile);
-    ofstream tempFile;
-    temp.open('temp.txt');
+    ofstream tempFile("temp.txt");
 
     // search for ID from file, copy over all lines except one with userID
+    string line;
     while (getline(statsData, line)){
         string lineToDel(line.begin(), line.begin() + line.find(" "));
         if (lineToDel != userID){
-            temp << line << endl;
+            tempFile << line << endl;
         }
     }
     
@@ -89,12 +90,12 @@ void StatsController::setStats(string userID, StatsObject newStats){
     newDataStr.append(",");
     newDataStr.append(to_string(newStats.getAccuracy()));
 
-    temp << newDataStr << endl;
+    tempFile << newDataStr << endl;
 
-    temp.close();
+    tempFile.close();
     statsData.close();
-    remove(dataFile);
-    rename('temp.txt', dataFile);
+    remove(dataFile.c_str());
+    rename("temp.txt", dataFile.c_str());
 
     userStats = newStats;
 }
