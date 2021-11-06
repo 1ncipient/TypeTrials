@@ -12,9 +12,11 @@ using namespace std;
  *
  * @param parent optional widget parent, can be a null pointer
  */
-MainUI::MainUI(QWidget *parent)
+MainUI::MainUI(string username, QWidget *parent)
     : QMainWindow(parent)
 {
+    userID = username;
+    statisticsAccess = new StatsController();
     // Create the topic selection input field and position it
     topicSelection = new QLineEdit(this);
     topicSelection->setGeometry(QRect(QPoint(25, 15), QSize(140, 40)));
@@ -71,10 +73,14 @@ void MainUI::onInput(const QString &text){
     string entered = text.toStdString();
     char last = entered.back();
     int index = entered.length() - 1;
-    game->keyPress(last, index);
+    if(game->keyPress(last, index)){
+        game->updateStats(this->userID);
+        typedText->setReadOnly(true);
+    }
     int progress = static_cast<int>(game->getProgress());
     gameProgress->setValue(progress);
     vector<int> stats = game->getGameStats();
+
 }
 
 /**
@@ -84,10 +90,8 @@ void MainUI::onInput(const QString &text){
  */
 void MainUI::startGame()
 {
-    std::cout << "Game was started" << std::endl;
-    std::cout << "User topic is: " << topicSelection->text().toStdString() << std::endl;
     TextObject *test = new TextObject(topicSelection->text().toStdString());
-    game = new GameClass(test);
+    game = new GameClass(test, statisticsAccess);
     typedText->setReadOnly(false);
     gameText->setText(QString::fromStdString(test->getText()));
     typedText->setText("");
