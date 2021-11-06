@@ -21,7 +21,7 @@ class StatsObject {
     /**
      * Constructor for StatsObject class; sets the variables to default values
      */
-    StatsObject();
+    StatsObject(int wpm = 0, int totalGames = 0, int totalWords = 0, int totalChars = 0, int totalWrongChars = 0, float accuracy = 0.0);
 
     /**
      * Destructor for StatsObject class

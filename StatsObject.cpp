@@ -9,13 +9,13 @@
 /**
  * Constructor for Command class; sets the instance variables to default values.
  */
-StatsObject::StatsObject(){
-    this->wpm = 0;
-    this->totalGames = 0;
-    this->totalWords = 0;
-    this->totalChars = 0;
-    this->totalWrongChars = 0;
-    this->accuracy = 0.0;
+StatsObject::StatsObject(int wpm, int totalGames, int totalWords, int totalChars, int totalWrongChars, float accuracy) {
+    this->wpm = wpm;
+    this->totalGames = totalGames; 
+    this->totalWords = totalWords;
+    this->totalChars = totalChars;
+    this->totalWrongChars = totalWrongChars;
+    this->accuracy = accuracy;
 }
 
 /**
