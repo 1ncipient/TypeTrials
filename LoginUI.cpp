@@ -17,7 +17,7 @@ LoginUI::LoginUI(QWidget *parent)
 {
 
     databaseAccess = new LoginController();
-    databaseAccess->setDatafile("temp.txt");
+    databaseAccess->setDatafile("users.txt");
     // Create the username text label and position
     usernameLabel = new QLabel("Username:", this);
     usernameLabel->setGeometry(QRect(QPoint(12, 16), QSize(65, 15)));
@@ -114,4 +114,13 @@ void LoginUI::handleRegister()
     }
     messageLabel -> setText("Registration succeeded");
 
+}
+
+
+void LoginUI::closeEvent(QCloseEvent *event){
+    if (databaseAccess->getStatus()) {
+        event->accept();
+    } else {
+        exit(0);
+    }
 }

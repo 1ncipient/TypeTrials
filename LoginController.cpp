@@ -3,12 +3,17 @@
 
 
 LoginController::LoginController(){
+    loginValid = false;
 }
 
 
 
 LoginController::~LoginController(){
 
+}
+
+bool LoginController::getStatus(){
+    return loginValid;
 }
 
 
@@ -18,6 +23,7 @@ bool LoginController::login(std::string username, std::string password){
     if (checkN!=-1){
         checkP = match(password);
         if ((checkN+1) == checkP){
+            loginValid = true;
             return true;
         }
     }
