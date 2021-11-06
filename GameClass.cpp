@@ -18,7 +18,7 @@ bool GameClass::keyPress(char character, int index){
     this->currentIndex = index;
     this->progressPercent = static_cast<float>(index)/gameText->getTotalChars();
     this->endTime = time(0);
-    if (gameText->getText()[index] == character){
+    if (gameText->getText()[index] == character && index == gameText->getTotalChars()){
         return true;
     }
     if (index > highestIndex){

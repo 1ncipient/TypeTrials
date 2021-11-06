@@ -73,10 +73,14 @@ void MainUI::onInput(const QString &text){
     string entered = text.toStdString();
     char last = entered.back();
     int index = entered.length() - 1;
-    game->keyPress(last, index);
+    if(game->keyPress(last, index)){
+        game->updateStats(this->userID);
+        typedText->setReadOnly(true);
+    }
     int progress = static_cast<int>(game->getProgress());
     gameProgress->setValue(progress);
     vector<int> stats = game->getGameStats();
+
 }
 
 /**
