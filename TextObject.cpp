@@ -58,31 +58,31 @@ string apiCall(string inputString)
     result = escapeJson(result);
 
     // trim the result to a maximum three sentences
-    vector<string> resultSentences = split(result, ".");
-    int vecSize = min(3, (int)resultSentences.size());
-    string shortResult = "";
-    for (int i = 0; i < vecSize - 1; i++)
-    {
-        shortResult += resultSentences.at(i) + ". ";
+    int count = 0;
+    end = 0;
+    for (int i = 0; i < (int) result.length(); i++) {
+        if (result.at(i) == '.' || result.at(i) == '?' || result.at(i) == '!') {
+            end = i;
+            if (++count == 3) {
+                break;
+            }
+        }
     }
-    shortResult += resultSentences.at(vecSize - 1) + ".";
+    result = result.substr(0, end + 1);
 
     // remove remaining unicode encoding
-    string arr[] = {"\\u005cn", "\\u005c", "\\u0022", "\\u2014", "u005cn", "u005c", "u0022", "u2014"};
+    string arr[] = {"\\u005cn", "\\u005c", "\\u0022", "\\u2014" "\\u2026", "u005cn", "u005c", "u0022", "u2014", "u2026"};
     vector<string> targets(arr, arr + sizeof(arr)/sizeof(string));
-    replaceAll(shortResult, targets, " ");
+    replaceAll(result, targets, " ");
 
     // replace all adjacent spaces with a single space
     string::size_type pos;
-    while((pos = shortResult.find("  ")) != string::npos)
+    while((pos = result.find("  ")) != string::npos)
     {
-    shortResult.replace(pos, 2, " ");
+        result.replace(pos, 2, " ");
     }
 
-    // strip white space at the beginning and end
-    shortResult.erase(remove(shortResult.begin(), shortResult.end(), ' '), shortResult.end());
-
-    return shortResult;
+    return result;
 }
 
 string execSysCommand(const char *cmd)
