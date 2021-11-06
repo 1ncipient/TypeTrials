@@ -7,6 +7,7 @@
 #include <sstream>
 #include <vector>
 #include <iomanip>
+#include <string.h>
 
 #include "TextObject.h"
 
@@ -16,7 +17,7 @@ TextObject::TextObject(string inputString)
 {
     this->text = apiCall(inputString);
     this->totalChars = this->text.length();
-    std::vector<std::string> words = split(this->text, " ");
+    vector<string> words = split(this->text, " ");
     this->totalWords = (int) words.size();
 }
 
@@ -45,41 +46,46 @@ string apiCall(string inputString)
     string command = "curl -F 'text=" + inputString + "' -H 'api-key:57c1f1eb-a7d7-46b0-bcb3-e70202d56fba' https://api.deepai.org/api/text-generator";
     const char *cmd = command.c_str();
 
-    std::string result = execSysCommand(cmd);
+    string result = execSysCommand(cmd);
+
+    // trim the resulting JSON string to only the relevant text section
     int start = result.find("\"output\": \"") + 11;
     int end = result.length() - 3;
+    result = result.substr(start, end - start);
 
-    std::string resultParse = escapeJson(result.substr(start, end - start));
-    std::vector<std::string> resultSentences = split(resultParse, ".");
+    // escape all JSON characters that were returned
+    result = escapeJson(result);
 
-    // set it to the min of 4 sentences or the length of vector
-    int vecSize = std::min(4, (int)resultSentences.size());
-
-    std::string shortResult = "";
+    // trim the result to a maximum four sentences
+    vector<string> resultSentences = split(result, ".");
+    int vecSize = min(4, (int)resultSentences.size());
+    string shortResult = "";
     for (int i = 0; i < vecSize - 1; i++)
     {
         shortResult += resultSentences.at(i) + ". ";
     }
     shortResult += resultSentences.at(vecSize - 1) + ".";
 
-    replaceAll(shortResult, "\\u005cn", " ");
-    replaceAll(shortResult, "\\u005c", " ");
-    replaceAll(shortResult, "\\u0022", " ");
-    replaceAll(shortResult, "u2014", " ");
+    // remove remaining unicode encoding
+    std::string arr[] = {"\\u005cn", "\\u005c", "\\u0022", "\\u2014", "u005cn", "u005c", "u0022", "u2014"};
+    vector<string> targets(arr, arr + sizeof(arr)/sizeof(std::string));
+    replaceAll(shortResult, targets, " ");
 
-    std::string::iterator new_end = std::unique(shortResult.begin(), shortResult.end(), adjacentSpaces);
-    shortResult.erase(new_end, shortResult.end());
-
-    std::cout << "\n" + shortResult + "\n" << std::endl;
+    // replace all adjacent spaces with a single space
+    string::size_type pos;
+    while((pos = shortResult.find("  ")) != string::npos)
+    {
+    shortResult.replace(pos, 2, " ");
+    }
 
     return shortResult;
 }
 
-std::vector<std::string> split(std::string str, std::string sep)
+vector<string> split(string str, string sep)
 {
     char *cstr = const_cast<char *>(str.c_str());
     char *current;
-    std::vector<std::string> arr;
+    vector<string> arr;
     current = strtok(cstr, sep.c_str());
     while (current != NULL)
     {
@@ -93,16 +99,16 @@ bool adjacentSpaces(char lhs, char rhs) {
     return (lhs == rhs) && (lhs == ' '); 
 }
 
-std::string escapeJson(const std::string &inputString)
+string escapeJson(const string &inputString)
 {
-    std::ostringstream o;
+    ostringstream o;
     for (int i = 0; i < inputString.length(); i++)
     {
         char c = inputString.at(i);
         if (c == '"' || c == '\\' || ('\x00' <= c && c <= '\x1f'))
         {
             o << "\\u"
-              << std::hex << std::setw(4) << std::setfill('0') << (int)c;
+              << hex << setw(4) << setfill('0') << (int)c;
         }
         else
         {
@@ -112,26 +118,31 @@ std::string escapeJson(const std::string &inputString)
     return o.str();
 }
 
-void replaceAll(std::string &str, const std::string &from, const std::string &to)
+void replaceAll(string &str, vector<string> targets, const string &to)
 {
-    if (from.empty())
-        return;
-    size_t start_pos = 0;
-    while ((start_pos = str.find(from, start_pos)) != std::string::npos)
-    {
-        str.replace(start_pos, from.length(), to);
-        start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+    for (int i = 0; i < targets.size(); i++) {
+        string from = targets.at(i);
+
+        if (from.empty())
+            return;
+
+        size_t start_pos = 0;
+        while ((start_pos = str.find(from, start_pos)) != string::npos) {
+            str.replace(start_pos, from.length(), to);
+            // In case 'to' contains 'from', like replacing 'x' with 'yx'
+            start_pos += to.length();
+        }
     }
 }
 
-std::string execSysCommand(const char *cmd)
+string execSysCommand(const char *cmd)
 {
-    std::array<char, 512> buffer;
-    std::string result;
-    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    array<char, 512> buffer;
+    string result;
+    unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
     if (!pipe)
     {
-        throw std::runtime_error("popen() failed!");
+        throw runtime_error("popen() failed!");
     }
     while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
     {
