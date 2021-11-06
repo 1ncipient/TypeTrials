@@ -8,6 +8,8 @@
 #include <boost/algorithm/string.hpp>
 #include "stdbool.h"
 #include "DatabaseController.h"
+#include <fstream>
+#include <iostream>
 
 class LoginController : public DatabaseController{
 

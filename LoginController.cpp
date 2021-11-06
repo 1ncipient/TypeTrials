@@ -28,11 +28,14 @@ bool LoginController::userRegister(std::string username, std::string password){
     int checkN;
     checkN = match(username);
     if (checkN==-1){
-        FILE* fp;
+        std::ofstream myfile;
         std::string file = this -> getDatafile();
-        fp = fopen(file.c_str(), "a");
-        fprintf(fp,"%s\n%s\n",username, password);
-        fclose(fp);
+        myfile.open(file, std::ios::app);
+        myfile << username;
+        myfile << "\n";
+        myfile << password;
+        myfile << "\n";
+        myfile.close();
         return true;
     }
     return false;
