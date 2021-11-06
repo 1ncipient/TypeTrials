@@ -14,7 +14,7 @@ class GameClass {
         int missedChars;
         time_t startTime, endTime;
         float progressPercent;
-        StatsController statisticsAccess;
+        StatsController *statisticsAccess;
         int currentIndex;
         int highestIndex;
         int calculateWpm();

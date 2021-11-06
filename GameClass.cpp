@@ -29,14 +29,14 @@ bool GameClass::keyPress(char character, int index){
 }
 
 void GameClass::updateStats(string userID){
-    vector<int> data = this->getProgress();
+    vector<int> data = this->getGameStats();
     StatsObject statistics = statisticsAccess->getStats(userID);
-    statistics.updateWpm(data);
+    statistics.updateWpm(data[0]);
     statistics.incrementTotalGames();
-    statistics.incrementTotalWords(gameText->getTotalWords);
-    statistics.incrementTotalChars(gameText->getTotalChars);
+    statistics.incrementTotalWords(gameText->getTotalWords());
+    statistics.incrementTotalChars(gameText->getTotalChars());
     statistics.incrementTotalWrongChars(this->missedChars);
-    float accuracy = static_cast<float>(gameText->getTotalChars - this->missedChars)/gameText->getTotalChars;
+    float accuracy = static_cast<float>(gameText->getTotalChars() - this->missedChars)/gameText->getTotalChars();
     statistics.updateAccuracy(accuracy*100.0);
     statisticsAccess->setStats(userID, statistics);
 }
@@ -55,7 +55,7 @@ int GameClass::calculateWpm(){
     long int end = static_cast<long int> (this->endTime);
     long int duration = end - start;
     int totalTime = duration;
-    int wpm = (this->currentIndex/totalTime)*60;
+    int wpm = ((this->currentIndex/5)/totalTime)*60;
     return wpm;
 }
 
