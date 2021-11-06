@@ -48,6 +48,7 @@ MainUI::MainUI(QWidget *parent)
     typedText = new QLineEdit(this);
     typedText->setGeometry(QRect(QPoint(25, 385), QSize(900, 40)));
     typedText->setStyleSheet("font: 20px");
+    connect(typedText, &QLineEdit::textEdited, this, &MainUI::onInput);
     // example connect function
     // connect(passwordInput, &QLineEdit::returnPressed, this, &MainUI::handleLogin);
 
@@ -65,6 +66,13 @@ MainUI::~MainUI() {
 
 }
 
+void MainUI::onInput(const QString &text){
+    string entered = text.toStdString();
+    string last (1, entered.back());
+    int index = entered.length() - 1;
+    std::cout << last << std::endl;
+}
+
 /**
  * startGame
  * 
@@ -72,6 +80,7 @@ MainUI::~MainUI() {
  */
 void MainUI::startGame()
 {
+    game = new GameClass();
     std::cout << "Game was started" << std::endl;
     std::cout << "User topic is: " << topicSelection->text().toStdString() << std::endl;
 }
