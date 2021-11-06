@@ -4,6 +4,7 @@
 #include <QtWidgets>
 #include "GameClass.h"
 #include <string>
+#include "TextObject.h"
 
 namespace Ui
 {

@@ -35,7 +35,7 @@ MainUI::MainUI(QWidget *parent)
     gameProgress = new QProgressBar(this);
     gameProgress->setGeometry(QRect(QPoint(25, 60), QSize(900, 40)));
     gameProgress->setRange(0, 100);
-    gameProgress->setValue(50);
+    gameProgress->setValue(0);
 
     // Create the gameText QTextEdit box and position it
     gameText = new QTextEdit(this);
@@ -68,9 +68,12 @@ MainUI::~MainUI() {
 
 void MainUI::onInput(const QString &text){
     string entered = text.toStdString();
-    string last (1, entered.back());
+    char last = entered.back();
     int index = entered.length() - 1;
-    std::cout << last << std::endl;
+    game->keyPress(last, index);
+    int progress = static_cast<int>(game->getProgress());
+    gameProgress->setValue(progress);
+    vector<int> stats = game->getGameStats();
 }
 
 /**
@@ -80,7 +83,8 @@ void MainUI::onInput(const QString &text){
  */
 void MainUI::startGame()
 {
-    game = new GameClass();
     std::cout << "Game was started" << std::endl;
     std::cout << "User topic is: " << topicSelection->text().toStdString() << std::endl;
+    TextObject *test = new TextObject("I just want to eat a banana.");
+    game = new GameClass(test);
 }
