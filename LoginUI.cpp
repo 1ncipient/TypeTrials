@@ -66,7 +66,7 @@ LoginUI::~LoginUI() {
  */
 void LoginUI::handleLogin()
 {
-    std::cout << "Login was pressed" << std::endl;
+    //std::cout << "Login was pressed" << std::endl;
 
     QString user = usernameInput -> text().trimmed();
     QString pass = passwordInput -> text().trimmed();
@@ -105,7 +105,7 @@ void LoginUI::handleRegister()
     QString user = usernameInput -> text().trimmed();
     QString pass = passwordInput -> text().trimmed();
 
-    if (!databaseAccess->userRegister(user.toStdString(), pass.toStdString())){
+    if (user.length() == 0||pass.length() == 0||!databaseAccess->userRegister(user.toStdString(), pass.toStdString())){
         std::cout << "Registration failed" << std::endl;
         return;
     }

@@ -43,20 +43,19 @@ bool LoginController::userRegister(std::string username, std::string password){
 
 
 int LoginController::match(std::string target){
-    FILE* fp;
-    int bufferLength = 255;
-    char buffer[bufferLength];
+    std::string buffer;
+    std::fstream myfile;
     std::string file = this -> getDatafile();
-    fp = fopen(file.c_str(), "r");
+    myfile.open(file, std::ios::in);
     int line = 1;
-    while(fgets(buffer, bufferLength, fp)) {
-        buffer[strcspn(buffer, "\n")] = 0;
+    while(std::getline(myfile, buffer)){
+        boost::trim_right(buffer);
         if (target.compare(buffer)==0){
-            fclose(fp);
+            myfile.close();
             return line;
         }
         line++;
     }
-    fclose(fp);
+    myfile.close();
     return -1;
 }
