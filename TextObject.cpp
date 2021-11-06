@@ -61,8 +61,8 @@ string apiCall(string inputString)
     int count = 0;
     end = 0;
     for (int i = 0; i < (int) result.length(); i++) {
+        end = i;
         if (result.at(i) == '.' || result.at(i) == '?' || result.at(i) == '!') {
-            end = i;
             if (++count == 3) {
                 break;
             }
