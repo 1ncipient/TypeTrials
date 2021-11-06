@@ -14,7 +14,7 @@
 class LoginController : public DatabaseController{
 
     private:
-        int     match(std::string target);
+        int     match(std::string target, int status);
         bool    loginValid;
 
 
