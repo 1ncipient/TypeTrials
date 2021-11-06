@@ -100,7 +100,7 @@ string execSysCommand(const char *cmd)
 string escapeJson(const string &inputString)
 {
     ostringstream o;
-    for (int i = 0; i < inputString.length(); i++)
+    for (int i = 0; i < (int) inputString.length(); i++)
     {
         char c = inputString.at(i);
         if (c == '"' || c == '\\' || ('\x00' <= c && c <= '\x1f'))
@@ -132,7 +132,7 @@ vector<string> split(string str, string sep)
 
 void replaceAll(string &str, vector<string> targets, const string &to)
 {
-    for (int i = 0; i < targets.size(); i++) {
+    for (int i = 0; i < (int) targets.size(); i++) {
         string from = targets.at(i);
 
         if (from.empty())
@@ -145,12 +145,4 @@ void replaceAll(string &str, vector<string> targets, const string &to)
             start_pos += to.length();
         }
     }
-}
-
-int main(int argc, char *argv[])
-{
-    TextObject *test = new TextObject("I just want to eat a banana.");
-    cout << test->getText() << endl;
-    cout << test->getTotalChars() << endl;
-    cout << test->getTotalWords() << endl;
 }
