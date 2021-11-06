@@ -28,7 +28,7 @@ class LoginUI : public QMainWindow
         QLineEdit *passwordInput;
         QPushButton *loginButton;
         QPushButton *registerButton;
-        // LoginController *databaseAccess;
+        LoginController *databaseAccess;
 };
 
 #endif // LOGINUI_H
