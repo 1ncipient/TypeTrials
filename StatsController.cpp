@@ -43,6 +43,7 @@ StatsObject StatsController::getStats(string userID){
     // if user doesn't exist, default initalize to 0 value
     if (dataTokens.size() == 0){
         StatsObject statsObj;
+        this->setStats(userID, statsObj);
         userStats = statsObj;
     }
     // else create stats object from data
@@ -56,17 +57,19 @@ StatsObject StatsController::getStats(string userID){
 }
 
 void StatsController::setStats(string userID, StatsObject newStats){
-    // open file
-    // file format: userID,wpm,totalgames,totalwords,totalchars,totalwrongchars,accuracy
+    // open files
+    string statsFilePath = "stats.txt";
+    string tempStatsFilePath = "tempstats.txt";
+
     ifstream statsData;
-    statsData.open("stats.txt");
-    ofstream tempFile("temp.txt");
+    statsData.open(statsFilePath, ios::in);
+    ofstream tempFile;
+    tempFile.open(tempStatsFilePath, ios::out);
 
     // search for ID from file, copy over all lines except one with userID
     string line;
     while (getline(statsData, line)){
-        string lineToDel(line.begin(), line.begin() + line.find(" "));
-        if (lineToDel != userID){
+        if (line.find(userID) == string::npos){
             tempFile << line << endl;
         }
     }
@@ -87,12 +90,16 @@ void StatsController::setStats(string userID, StatsObject newStats){
     newDataStr.append(",");
     newDataStr.append(to_string(newStats.getAccuracy()));
 
+    // add updated statline to newfile
     tempFile << newDataStr << endl;
 
-    tempFile.close();
     statsData.close();
-    remove(dataFile.c_str());
-    rename("tempstats.txt", dataFile.c_str());
+    tempFile.close();
+
+    // Remove outdated statsfile, and rename temporary stats file to original statsfile name
+    const char * statsfilename = statsFilePath.c_str();
+    remove(statsfilename);
+    rename(tempStatsFilePath.c_str(), statsfilename);
 
     userStats = newStats;
 }
