@@ -2,6 +2,7 @@
 #define LOGINUI_H
 
 #include <QtWidgets>
+#include "LoginController.h"
 
 namespace Ui
 {
