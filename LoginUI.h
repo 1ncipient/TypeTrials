@@ -13,6 +13,10 @@ class LoginUI : public QMainWindow
 {
     Q_OBJECT
     
+
+    protected:
+        void closeEvent(QCloseEvent *event);
+
     public:
         explicit LoginUI(QWidget *parent = nullptr);
         ~LoginUI();

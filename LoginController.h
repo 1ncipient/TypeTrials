@@ -14,12 +14,14 @@
 class LoginController : public DatabaseController{
 
     private:
-        int            match(std::string target);
+        int     match(std::string target);
+        bool    loginValid;
 
 
     public:
         LoginController();
         ~LoginController();
+        bool getStatus();
         bool login(std::string username, std::string password);
         bool userRegister(std::string username, std::string password);
 
