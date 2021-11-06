@@ -19,7 +19,7 @@ StatsObject StatsController::getStats(string userID){
     // open file
     // file format: userID,wpm,totlgames,totalwords,totalchars,totalwrongchars,accuracy
     ifstream statsData;
-    statsData.open(dataFile);
+    statsData.open("stats.txt");
 
     if (!statsData.is_open()){
         cout<<"File doesn't exist";
@@ -62,7 +62,7 @@ void StatsController::setStats(string userID, StatsObject newStats){
     // open file
     // file format: userID,wpm,totalgames,totalwords,totalchars,totalwrongchars,accuracy
     ifstream statsData;
-    statsData.open(dataFile);
+    statsData.open("stats.txt");
     ofstream tempFile("temp.txt");
 
     // search for ID from file, copy over all lines except one with userID
