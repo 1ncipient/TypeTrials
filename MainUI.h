@@ -2,6 +2,8 @@
 #define MAINUI_H
 
 #include <QtWidgets>
+#include "GameClass.h"
+#include <string>
 
 namespace Ui
 {
@@ -19,10 +21,11 @@ class MainUI : public QMainWindow
     private slots:
         // void displayStats();
         void startGame();
-        // void onInput();
+        void onInput(const QString &text);
         // void finishedGame();
 
     private:
+        GameClass *game;
         QLineEdit *topicSelection;
         QPushButton *playButton;
         QPushButton *playerStats;
