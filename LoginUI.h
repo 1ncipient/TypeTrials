@@ -18,7 +18,7 @@ class LoginUI : public QMainWindow
         void closeEvent(QCloseEvent *event);
 
     public:
-        explicit LoginUI(QWidget *parent = nullptr);
+        explicit LoginUI(std::string &username, QWidget *parent = nullptr);
         ~LoginUI();
 
     private slots:
@@ -26,7 +26,7 @@ class LoginUI : public QMainWindow
         void handleRegister();
 
     private:
-        
+        std::string *username;
         QLabel *usernameLabel;
         QLineEdit *usernameInput;
         QLabel *passwordLabel;

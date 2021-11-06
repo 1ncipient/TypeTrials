@@ -12,9 +12,11 @@ using namespace std;
  *
  * @param parent optional widget parent, can be a null pointer
  */
-LoginUI::LoginUI(QWidget *parent)
+LoginUI::LoginUI(std::string &sessionUsername, QWidget *parent)
     : QMainWindow(parent)
 {
+    
+    username = &sessionUsername;
 
     databaseAccess = new LoginController();
     databaseAccess->setDatafile("users.txt");
@@ -74,6 +76,7 @@ void LoginUI::handleLogin()
     QString user = usernameInput -> text().trimmed();
     QString pass = passwordInput -> text().trimmed();
     if (databaseAccess->login(user.toStdString(), pass.toStdString())){
+        *(this->username) = user.toStdString();
         this->close();
     }
     messageLabel -> setText("Login failed");

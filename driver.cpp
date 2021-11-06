@@ -8,15 +8,19 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    // current users, successful login username
+    std::string sessionUser = "";
+
     // display the login/registration page before continuing
-    LoginUI loginWindow;
+    LoginUI loginWindow(sessionUser);
     loginWindow.show();
     app.exec();
 
+    std::cout << sessionUser << std::endl;
     std::cout << "Returned from login" << std::endl;
 
     // upon successful login/registration, loginWindow will close and the mainUI will be rendered
-    MainUI mainUI;
+    MainUI mainUI(sessionUser);
     mainUI.show();
     app.exec();
 
