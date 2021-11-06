@@ -2,6 +2,7 @@
 #define LOGINUI_H
 
 #include <QtWidgets>
+#include "LoginController.h"
 
 namespace Ui
 {
@@ -28,7 +29,7 @@ class LoginUI : public QMainWindow
         QLineEdit *passwordInput;
         QPushButton *loginButton;
         QPushButton *registerButton;
-        // LoginController *databaseAccess;
+        LoginController *databaseAccess;
 };
 
 #endif // LOGINUI_H

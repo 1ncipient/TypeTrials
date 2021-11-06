@@ -15,6 +15,9 @@ using namespace std;
 LoginUI::LoginUI(QWidget *parent)
     : QMainWindow(parent)
 {
+
+    databaseAccess = new LoginController();
+    databaseAccess->setDatafile("temp.txt");
     // Create the username text label and position
     usernameLabel = new QLabel("Username:", this);
     usernameLabel->setGeometry(QRect(QPoint(12, 16), QSize(65, 15)));
@@ -63,8 +66,14 @@ LoginUI::~LoginUI() {
  */
 void LoginUI::handleLogin()
 {
-    std::cout << "Login was pressed" << std::endl;
-    this->close();
+    //std::cout << "Login was pressed" << std::endl;
+
+    QString user = usernameInput -> text().trimmed();
+    QString pass = passwordInput -> text().trimmed();
+    if (databaseAccess->login(user.toStdString(), pass.toStdString())){
+        this->close();
+    }
+    std::cout << "Login failed" << std::endl;
 
     // // Retrieve the user inputted command
     // QString commandString = commandInput->text().trimmed();
@@ -92,5 +101,14 @@ void LoginUI::handleLogin()
  */
 void LoginUI::handleRegister()
 {
-    std::cout << "Register was pressed" << std::endl;
+
+    QString user = usernameInput -> text().trimmed();
+    QString pass = passwordInput -> text().trimmed();
+
+    if (user.length() == 0||pass.length() == 0||!databaseAccess->userRegister(user.toStdString(), pass.toStdString())){
+        std::cout << "Registration failed" << std::endl;
+        return;
+    }
+    std::cout << "Registration succeeded" << std::endl;
+
 }
