@@ -16,9 +16,9 @@ GameClass::GameClass(TextObject *text, StatsController *stats){
 
 bool GameClass::keyPress(char character, int index){
     this->currentIndex = index;
-    this->progressPercent = static_cast<float>(index)/gameText->getTotalChars();
+    this->progressPercent = static_cast<float>(index)/(gameText->getTotalChars()-1);
     this->endTime = time(0);
-    if (gameText->getText()[index] == character && index == gameText->getTotalChars()){
+    if (gameText->getText()[index] == character && index == gameText->getTotalChars()-1){
         return true;
     }
     if (index > highestIndex){
@@ -34,9 +34,9 @@ void GameClass::updateStats(string userID){
     statistics.updateWpm(data[0]);
     statistics.incrementTotalGames();
     statistics.incrementTotalWords(gameText->getTotalWords());
-    statistics.incrementTotalChars(gameText->getTotalChars());
+    statistics.incrementTotalChars(gameText->getTotalChars()-1);
     statistics.incrementTotalWrongChars(this->missedChars);
-    float accuracy = static_cast<float>(gameText->getTotalChars() - this->missedChars)/gameText->getTotalChars();
+    float accuracy = static_cast<float>((gameText->getTotalChars()-1) - this->missedChars)/(gameText->getTotalChars()-1);
     statistics.updateAccuracy(accuracy*100.0);
     statisticsAccess->setStats(userID, statistics);
 }

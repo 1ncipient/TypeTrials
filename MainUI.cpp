@@ -24,12 +24,12 @@ MainUI::MainUI(string username, QWidget *parent)
 
     // Create the play button, position it, and connect to the startGame method
     playButton = new QPushButton("Enter TypeTrials", this);
-    playButton->setGeometry(QRect(QPoint(185, 14), QSize(120, 45)));
+    playButton->setGeometry(QRect(QPoint(185, 14), QSize(120, 41)));
     connect(playButton, &QPushButton::released, this, &MainUI::startGame);
 
     // Create the stats button, position it, and connect to the displayStats method
     playerStats = new QPushButton("My Stats", this);
-    playerStats->setGeometry(QRect(QPoint(855, 14), QSize(70, 45)));
+    playerStats->setGeometry(QRect(QPoint(855, 14), QSize(70, 40)));
     // example connect function
     // connect(passwordInput, &QLineEdit::returnPressed, this, &MainUI::handleLogin);
 
@@ -94,6 +94,7 @@ void MainUI::startGame()
     game = new GameClass(test, statisticsAccess);
     typedText->setReadOnly(false);
     gameText->setText(QString::fromStdString(test->getText()));
+    gameProgress->setValue(0);
     typedText->setText("");
     topicSelection->setText("");
 
