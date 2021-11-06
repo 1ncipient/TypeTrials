@@ -81,22 +81,20 @@ string apiCall(string inputString)
     return shortResult;
 }
 
-vector<string> split(string str, string sep)
+string execSysCommand(const char *cmd)
 {
-    char *cstr = const_cast<char *>(str.c_str());
-    char *current;
-    vector<string> arr;
-    current = strtok(cstr, sep.c_str());
-    while (current != NULL)
+    array<char, 512> buffer;
+    string result;
+    unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe)
     {
-        arr.push_back(current);
-        current = strtok(NULL, sep.c_str());
+        throw runtime_error("popen() failed!");
     }
-    return arr;
-}
-
-bool adjacentSpaces(char lhs, char rhs) { 
-    return (lhs == rhs) && (lhs == ' '); 
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
+    {
+        result += buffer.data();
+    }
+    return result;
 }
 
 string escapeJson(const string &inputString)
@@ -118,6 +116,20 @@ string escapeJson(const string &inputString)
     return o.str();
 }
 
+vector<string> split(string str, string sep)
+{
+    char *cstr = const_cast<char *>(str.c_str());
+    char *current;
+    vector<string> arr;
+    current = strtok(cstr, sep.c_str());
+    while (current != NULL)
+    {
+        arr.push_back(current);
+        current = strtok(NULL, sep.c_str());
+    }
+    return arr;
+}
+
 void replaceAll(string &str, vector<string> targets, const string &to)
 {
     for (int i = 0; i < targets.size(); i++) {
@@ -133,22 +145,6 @@ void replaceAll(string &str, vector<string> targets, const string &to)
             start_pos += to.length();
         }
     }
-}
-
-string execSysCommand(const char *cmd)
-{
-    array<char, 512> buffer;
-    string result;
-    unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
-    if (!pipe)
-    {
-        throw runtime_error("popen() failed!");
-    }
-    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
-    {
-        result += buffer.data();
-    }
-    return result;
 }
 
 int main(int argc, char *argv[])
