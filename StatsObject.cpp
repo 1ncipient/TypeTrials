@@ -1,11 +1,11 @@
-//Henry So
 //CS3307 StatsObject C++ file
-//Nov 5 2021
+
 
 //include header file
 #include "StatsObject.h"
 
 StatsObject::StatsObject(int wpm, int totalGames, int totalWords, int totalChars, int totalWrongChars, float accuracy) {
+    //instance variables
     this->wpm = wpm;
     this->totalGames = totalGames; 
     this->totalWords = totalWords;

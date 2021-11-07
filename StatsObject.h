@@ -1,6 +1,5 @@
-//Henry So
 //CS3307 StatsObject Header File
-// Nov 5 2021
+
 
 //guard
 #ifndef StatsObject_h
