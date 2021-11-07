@@ -1,42 +1,24 @@
 
 #include "LoginController.h"
 
-/**
- * 
- * Constructor for a DatabaseController object that handles login functions
- *
- */
+
 LoginController::LoginController(){
     loginValid = false;
 }
 
 
-/**
- * 
- * Empty destructor for a LoginController object
- */
+
 LoginController::~LoginController(){
 
 }
 
 
-/**
- * 
- * Returns the current login status.
- * @return Current login status
- */
+
 bool LoginController::getStatus(){
     return loginValid;
 }
 
-/**
- * 
- * Checks whether a valid username and pasword combo have been entered.
- * 
- * @param username username to be checked
- * @param password password to be checked
- * @return true if valid, false if invalid
- */
+
 bool LoginController::login(std::string username, std::string password){
     int checkN, checkP;
     //uses the match function to validate
@@ -52,14 +34,7 @@ bool LoginController::login(std::string username, std::string password){
     return false;
 }
 
-/**
- * 
- * Function called when registering a new user.
- * 
- * @param username username to register
- * @param password password to register
- * @return true if successful, false if unsuccessful
- */
+
 bool LoginController::userRegister(std::string username, std::string password){
     int checkN;
     checkN = match(username, 1);

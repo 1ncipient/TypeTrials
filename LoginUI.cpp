@@ -5,13 +5,7 @@
 
 using namespace std;
 
-/**
- * 
- * Constructor for a MainWindow object, initializes the application window
- *
- * @param parent optional widget parent, can be a null pointer
- * @param sessionUsername Username for the current user
- */
+
 LoginUI::LoginUI(std::string &sessionUsername, QWidget *parent)
     : QMainWindow(parent)
 {
@@ -55,19 +49,12 @@ LoginUI::LoginUI(std::string &sessionUsername, QWidget *parent)
     setWindowTitle("TypeTrails Login");
 }
 
-/**
- * 
- * 
- * Empty destructor for a LoginUI object
- */
+
 LoginUI::~LoginUI() {
 
 }
 
-/**
- * 
- * This function is called when the user presses the "Login" button
- */
+
 void LoginUI::handleLogin()
 {
     //std::cout << "Login was pressed" << std::endl;
@@ -84,12 +71,7 @@ void LoginUI::handleLogin()
     
 }
 
-/**
- * 
- * This function is called when the user presses the Register button. 
- * It checks if a unique, valid username and unique password has been chosen, 
- * and writes them to the file specified in databaseAcess
- */
+
 void LoginUI::handleRegister()
 {
 
@@ -104,19 +86,13 @@ void LoginUI::handleRegister()
 
 }
 
-/**
- * 
- * This function overrides the base closeEvent function for the login window. 
- * If the user has logged in successfully, then it accepts the close event. 
- * Otherwise, this is triggered by the user pressing the "X" button, 
- * which triggers the program to end.
- * 
- * @param event Close event that occurs when either the user logs in, or presses the close button.
- */
+
 void LoginUI::closeEvent(QCloseEvent *event){
+    //if getStatus returns true, function has been triggered by a successful login, so accept event
     if (databaseAccess->getStatus()) {
         event->accept();
     } else {
+        //otherwise, has been triggered by user pressing the close button, so end program
         exit(0);
     }
 }
