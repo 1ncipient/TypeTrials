@@ -64,4 +64,13 @@ class MainUI : public QMainWindow
         QLabel *currentStats;
 };
 
+/**
+ * @brief Free helper function to determine if user entered topic is valid
+ * 
+ * @param input The user entered topic
+ * @return true If entered input is valid
+ * @return false If entered input is invalid
+ */
+bool isValidTopic(std::string input);
+
 #endif // MAINUI_H

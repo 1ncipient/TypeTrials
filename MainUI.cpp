@@ -90,7 +90,16 @@ void MainUI::onInput(const QString &text){
  */
 void MainUI::startGame()
 {
-    TextObject *test = new TextObject(topicSelection->text().toStdString());
+    string selectedTopic = topicSelection->text().toStdString();
+    if (!isValidTopic(selectedTopic)) {
+        gameProgress->setValue(0);
+        typedText->setText("");
+        gameText->setText("");
+        topicSelection->setText("");
+        return;
+    }
+
+    TextObject *test = new TextObject(selectedTopic);
     game = new GameClass(test, statisticsAccess);
     typedText->setReadOnly(false);
     gameText->setText(QString::fromStdString(test->getText()));
@@ -98,4 +107,29 @@ void MainUI::startGame()
     typedText->setText("");
     topicSelection->setText("");
 
+}
+
+bool isValidTopic(string input)
+{
+    int charCount = 0;
+    int puncCount = 0;
+    bool valid = true;
+	for (int i = 0; i < (int) input.size(); i++)
+	{
+		if (('a' <= input.at(i) && input.at(i) <= 'z') || ('A' <= input.at(i) && input.at(i) <= 'Z')) {
+            charCount++;
+            continue;
+        } 
+        else if (input.at(i) == '.' || input.at(i) == '!' || input.at(i) == ',' || input.at(i) == '?') {
+            puncCount++;
+            continue;
+        }
+        else {
+            valid = false;
+        }
+	}
+    if (puncCount >= charCount || charCount < 1) {
+        valid = false;
+    }
+	return valid;
 }
