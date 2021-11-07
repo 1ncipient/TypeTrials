@@ -6,11 +6,11 @@
 using namespace std;
 
 /**
- * LoginUI
  * 
  * Constructor for a MainWindow object, initializes the application window
  *
  * @param parent optional widget parent, can be a null pointer
+ * @param sessionUsername Username for the current user
  */
 LoginUI::LoginUI(std::string &sessionUsername, QWidget *parent)
     : QMainWindow(parent)
@@ -56,7 +56,7 @@ LoginUI::LoginUI(std::string &sessionUsername, QWidget *parent)
 }
 
 /**
- * ~LoginUI
+ * 
  * 
  * Empty destructor for a LoginUI object
  */
@@ -65,9 +65,8 @@ LoginUI::~LoginUI() {
 }
 
 /**
- * handleLogin
  * 
- * Description
+ * This function is called when the user presses the "Login" button
  */
 void LoginUI::handleLogin()
 {
@@ -75,9 +74,10 @@ void LoginUI::handleLogin()
 
     QString user = usernameInput -> text().trimmed();
     QString pass = passwordInput -> text().trimmed();
+    //if the login function returns ture, then login was sucessful
     if (databaseAccess->login(user.toStdString(), pass.toStdString())){
         *(this->username) = user.toStdString();
-        this->close();
+        this->close();  //triggers the closeEvent
     }
     messageLabel -> setText("Login failed");
 
@@ -85,16 +85,17 @@ void LoginUI::handleLogin()
 }
 
 /**
- * handleRegister
  * 
- * Description
+ * This function is called when the user presses the Register button. 
+ * It checks if a unique, valid username and unique password has been chosen, 
+ * and writes them to the file specified in databaseAcess
  */
 void LoginUI::handleRegister()
 {
 
     QString user = usernameInput -> text().trimmed();
     QString pass = passwordInput -> text().trimmed();
-
+    //if either the username and password are empty, or they are invalid, then fail
     if (user.length() == 0||pass.length() == 0||!databaseAccess->userRegister(user.toStdString(), pass.toStdString())){
         messageLabel -> setText("Registration failed");
         return;
@@ -103,7 +104,15 @@ void LoginUI::handleRegister()
 
 }
 
-
+/**
+ * 
+ * This function overrides the base closeEvent function for the login window. 
+ * If the user has logged in successfully, then it accepts the close event. 
+ * Otherwise, this is triggered by the user pressing the "X" button, 
+ * which triggers the program to end.
+ * 
+ * @param event Close event that occurs when either the user logs in, or presses the close button.
+ */
 void LoginUI::closeEvent(QCloseEvent *event){
     if (databaseAccess->getStatus()) {
         event->accept();
