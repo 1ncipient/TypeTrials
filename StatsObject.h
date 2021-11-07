@@ -6,7 +6,10 @@
 #ifndef StatsObject_h
 #define StatsObject_h
 
-
+/**
+ * @brief StatsObject class used for user personal typing stats.
+ * 
+ */
 class StatsObject {
     private:
     //instance variables
@@ -19,73 +22,106 @@ class StatsObject {
 
     public:
     /**
-     * Constructor for StatsObject class; sets the variables to default values
+     * Create a new StatsObject with default values 0 for int, and 0 for float respectively.
+     * @brief Constructor
+     * 
+     * @param wpm Words typed per minute stat.
+     * @param totalGames Total games played by user stat.
+     * @param totalWords Total words typed by user stat.
+     * @param totalChars Total characters typed by user stat.
+     * @param totalWrongChars Total wrong characters typed by user stat.
+     * @param accuracy Overall accuracy typed by user stat.
      */
     StatsObject(int wpm = 0, int totalGames = 0, int totalWords = 0, int totalChars = 0, int totalWrongChars = 0, float accuracy = 0.0);
 
     /**
-     * Destructor for StatsObject class
+     * Destructor for StatsObject object. Called when delete operator is utilized.
+     * @brief Destructor
+     * 
      */
     ~StatsObject();
 
-    /** 
-     * getter method for variable wpm; returns int
-    */ 
+    /**
+     * @brief Get an integer that refers to the average words per minute typed by the user.
+     * 
+     * @return The integer stored in the wpm variable.
+     */
     int getWpm() { return wpm; }
     
-    /** 
-     * getter method for variable totalGames; returns int
-    */ 
+    /**
+     * @brief Get an integer that refers to the total number of games that the user has played.
+     * 
+     * @return The integer stored in the totalGames variable. 
+     */
     int getTotalGames() { return totalGames; }
     
-    /** 
-     * getter method for variable totalWords; returns int
-    */ 
+    /**
+     * @brief Get an integer that refers to the total number of words that the user has typed.
+     * 
+     * @return The integer stored in the totalWords variable. 
+     */
     int getTotalWords() { return totalWords; }
     
-    /** 
-     * getter method for variable totalChars; returns int
-    */ 
+    /**
+     * @brief Get an integer that refers to the total number of characters that the user has typed.
+     * 
+     * @return The integer stored in the totalChars variable. 
+     */
     int getTotalChars() { return totalChars; }
     
-    /** 
-     * getter method for variable totalWrongChars; returns int
-    */ 
+    /**
+     * @brief Get an integer that refers to the total number of incorrect characters that the user has typed.
+     * 
+     * @return The integer stored in the totalWrongChars variable. 
+     */
     int getTotalWrongChars() { return totalWrongChars; }
    
-    /** 
-     * getter method for variable accuracy; returns float
-    */ 
+    /**
+     * @brief Get a float value that refers to the historical accuracy of the correct characters typed by the user.
+     * 
+     * @return The float stored in the accuracy variable. 
+     */
     float getAccuracy() { return accuracy; }
     
-    /**
-    * Setter method for variable wpm. Using the parameter wpm, this objects wpm variable is set to whatever is in the parameter variable.
-    */
+    /** 
+     * @brief Updates the user's historical average words per minute typed.
+     * 
+     * @param wpm When wpm is passed in as a parameter to the method, this->wpm is updated to include the value of wpm in the historic score. 
+     */
     void updateWpm(int wpm);
 
     /**
-    * Setter method for variable totalGames. Using the parameter totalGames, this objects totalGames variable is set to whatever is in the parameter variable.
-    */
+     * @brief Increases the number of total games played by user by 1. 
+     * 
+     */
     void incrementTotalGames();
 
     /**
-    * Setter method for variable totalWords. Using the parameter totalWords, this objects totalWords variable is set to whatever is in the parameter variable.
-    */
+     * @brief Takes the totalWords parameter to add to the historic total of this->totalWords.
+     * 
+     * @param totalWords When totalWords is passed in as a parameter to the method, it is added to the this->totalWords (total words ever typed by the user).
+     */
     void incrementTotalWords(int totalWords);
 
     /**
-    * Setter method for variable totalChars. Using the parameter totalChars, this objects totalChars variable is set to whatever is in the parameter variable.
-    */
+     * @brief Like method incrementTotalWords, this method takes the totalChars parameter to add to the historical total of this->totalChars.
+     * 
+     * @param totalChars When totalChars is passed in as a parameter to the method, it is added to the this->totalChars (total characters ever typed by the user).
+     */
     void incrementTotalChars(int totalChars);
 
     /**
-    * Setter method for variable totalWrongChars. Using the parameter totalWrongChars, this objects totalWrongChars variable is set to whatever is in the parameter variable.
-    */
+     * @brief This method takes the totalWrongChars parameter and adds it to the historical number of wrong characters typed by the user.
+     * 
+     * @param totalWrongChars When totalChars is passed in as a parameter to the method, it is added to the this->totalChars (total wrong characters ever typed by the user).
+     */
     void incrementTotalWrongChars(int totalWrongChars);
 
     /**
-    * Setter method for variable accuracy. Using the parameter accuracy, this objects accuracy variable is set to whatever is in the parameter variable.
-    */
+     * @brief This method updates the historic accuracy of the user using an algorithm that calculates the average accuracy obtained in every game played by the user.
+     * 
+     * @param accuracy When accuracy is passed in, it is used to update the historic accuracy of the user.
+     */
     void updateAccuracy(float accuracy);
 };
 
