@@ -3,18 +3,42 @@
 
 #include <string>
 
+/**
+ * @brief A DatabaseController acting as the parent class for other classes that accesses/stores information, acting as a database
+ * 
+ */
 class DatabaseController {
     protected:
+         /** @brief The path to the datafile acting as the database
+         */
         std::string dataFile;
 
     public:
-        // Constructor & Destructor
+        /**
+         * @brief Construct the DatabaseController. Empty constructor
+         * 
+         */
         DatabaseController();
+
+        /**
+         * @brief Destroy the DatabaseController. Empty destructor
+         * 
+         */
         ~DatabaseController();
 
-        // Getters/Setters for data members
+        /**
+         * @brief Return the path to the datafile of some information type/database
+         * 
+         * @return string The path to datafile
+         */
         std::string getDatafile();
+
+        /**
+         * @brief Set the path to the datafile of some information type/database
+         * 
+         * @param str The new path to datafile
+         */
         void setDatafile(std::string);
 };
 
-#endif
+#endif // DATABASECONTROLLER_H

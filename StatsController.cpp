@@ -14,10 +14,7 @@ StatsController::~StatsController() {
 }
 
 StatsObject StatsController::getStats(string userID){
-    // if userStats object not set
-
-    // open file
-    // file format: userID,wpm,totlgames,totalwords,totalchars,totalwrongchars,accuracy
+    // Open file with format: userID,wpm,totalgames,totalwords,totalchars,totalwrongchars,accuracy
     ifstream statsData;
     statsData.open("stats.txt");
 
@@ -25,10 +22,10 @@ StatsObject StatsController::getStats(string userID){
         cout<<"File doesn't exist";
     }
 
-    // vector to save data
+    // temporary vector to save data
     vector<string> dataTokens;
 
-    // search for ID from file and store data into vector
+    // search for userID from file and store data into vector
     string line;
 	while (getline(statsData, line)){
         if (line.find(userID) != string::npos) {
@@ -40,13 +37,13 @@ StatsObject StatsController::getStats(string userID){
         }
     }
 
-    // if user doesn't exist, default initalize to 0 value
+    // if user doesn't exist, create an entry and set initial statistics to default values of 0
     if (dataTokens.size() == 0){
         StatsObject statsObj;
         this->setStats(userID, statsObj);
         userStats = statsObj;
     }
-    // else create stats object from data
+    // if user exists, create stats object from data
     else {        
         StatsObject statsObj(stoi(dataTokens[1]), stoi(dataTokens[2]), stoi(dataTokens[3]), stoi(dataTokens[4]), stoi(dataTokens[5]), stof(dataTokens[6]));
         userStats = statsObj;
@@ -57,7 +54,7 @@ StatsObject StatsController::getStats(string userID){
 }
 
 void StatsController::setStats(string userID, StatsObject newStats){
-    // open files
+    // open files for storage and temporary storage
     string statsFilePath = "stats.txt";
     string tempStatsFilePath = "tempstats.txt";
 
@@ -66,7 +63,7 @@ void StatsController::setStats(string userID, StatsObject newStats){
     ofstream tempFile;
     tempFile.open(tempStatsFilePath, ios::out);
 
-    // search for ID from file, copy over all lines except one with userID
+    // search for ID from file, copy over all data except the one corresponding to userID
     string line;
     while (getline(statsData, line)){
         if (line.find(userID) == string::npos){
@@ -74,7 +71,7 @@ void StatsController::setStats(string userID, StatsObject newStats){
         }
     }
     
-    // create updated stat line
+    // Create updated statistics string with new data
     string newDataStr = "";
     newDataStr.append(userID);
     newDataStr.append(",");
@@ -90,7 +87,7 @@ void StatsController::setStats(string userID, StatsObject newStats){
     newDataStr.append(",");
     newDataStr.append(to_string(newStats.getAccuracy()));
 
-    // add updated statline to newfile
+    // add updated statline to newfile (temporary storage)
     tempFile << newDataStr << endl;
 
     statsData.close();

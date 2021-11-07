@@ -5,18 +5,44 @@
 #include "DatabaseController.h"
 #include "StatsObject.h"
 
+/**
+ * @brief A StatsController, acting as the means to store and access user statistics
+ * 
+ */
 class StatsController: public DatabaseController {
     protected:
+        /** @brief The StatsObject containing various statistics (WPM, Accuracy...) of a current user
+         */
         StatsObject userStats;
 
     public:
-        // Constructor & Destructor
+        /**
+         * @brief Construct the StatsController. Empty constructor
+         * 
+         */
         StatsController();
+
+        /**
+         * @brief Destroy the StatsController. Empty destructor
+         * 
+         */
         ~StatsController();
 
-        // Getters/Setters for data members
+        /**
+         * @brief Return the StatsObject containing typing statistics of some user
+         *
+         * @param str The userID of user to get statistics of 
+         * @return StatsObject Containing typing statistics of a user
+         */
         StatsObject getStats(std::string);
+
+        /**
+         * @brief Set the StatsObject containing typing statistics for a user
+         *
+         * @param str userID of a user to set statistics for
+         * @param StatsObject The StatsObject containing various typing statistics
+         */
         void setStats(std::string, StatsObject);
 };
 
-#endif
+#endif // STATSCONTROLLER_H
