@@ -9,7 +9,6 @@ using namespace std;
 MainUI::MainUI(string username, QWidget *parent)
     : QMainWindow(parent)
 {
-
     //set the current user's id
     userID = username;
     //create a new stats controller to update and store stats later
@@ -28,8 +27,6 @@ MainUI::MainUI(string username, QWidget *parent)
     // Create the stats button, position it, and connect to the displayStats method
     playerStats = new QPushButton("My Stats", this);
     playerStats->setGeometry(QRect(QPoint(855, 14), QSize(70, 40)));
-    // example connect function
-    // connect(passwordInput, &QLineEdit::returnPressed, this, &MainUI::handleLogin);
 
     // Create the typing game's progress bar
     gameProgress = new QProgressBar(this);
@@ -65,7 +62,7 @@ MainUI::~MainUI() {
 
 }
 
-void MainUI::onInput(const QString &text){
+void MainUI::onInput(const QString &text) {
     //get the string in the user typed in the QTextEdit
     string entered = text.toStdString();
 
@@ -76,7 +73,7 @@ void MainUI::onInput(const QString &text){
     int index = entered.length() - 1;
 
     //call the method keyPress(), if true, they reached the end of the game
-    if(game->keyPress(last, index)){
+    if (game->keyPress(last, index)) {
         //update the stats of the user
         game->updateStats(this->userID);
         //do not allow the user to keep typing
@@ -101,14 +98,12 @@ void MainUI::onInput(const QString &text){
     currentStats->setText(QString::fromStdString(statistics));
 }
 
-void MainUI::startGame()
-{
+void MainUI::startGame() {
     //get the topic the user entered
     string selectedTopic = topicSelection->text().toStdString();
 
     //call isValidTopic for input validation
     if (!isValidTopic(selectedTopic)) {
-
         //reset these variables and text, so the user can enter a valid topic
         gameProgress->setValue(0);
         typedText->setText("");
@@ -134,15 +129,13 @@ void MainUI::startGame()
 
 }
 
-bool isValidTopic(string input)
-{
+bool isValidTopic(string input) {
     int charCount = 0;
     int puncCount = 0;
     bool valid = true;
 
     //loop through the whole string
-	for (int i = 0; i < (int) input.size(); i++)
-	{
+	for (int i = 0; i < (int) input.size(); i++) {
         //check if the character at the index i is a letter
 		if (('a' <= input.at(i) && input.at(i) <= 'z') || ('A' <= input.at(i) && input.at(i) <= 'Z')) {
             charCount++;

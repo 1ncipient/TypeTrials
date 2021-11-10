@@ -1,10 +1,11 @@
 #include <ctime>
-#include "GameClass.h"
 #include <iostream>
+
+#include "GameClass.h"
 
 using namespace std;
 
-GameClass::GameClass(TextObject *text, StatsController *stats){
+GameClass::GameClass(TextObject *text, StatsController *stats) {
     //set default values for private variables
     this->gameText = text;
     this->statisticsAccess = stats;
@@ -15,8 +16,7 @@ GameClass::GameClass(TextObject *text, StatsController *stats){
     this->startTime = time(0);
 }
 
-bool GameClass::keyPress(char character, int index){
-
+bool GameClass::keyPress(char character, int index) {
     //store the index in the variable currentIndex
     this->currentIndex = index;
 
@@ -27,13 +27,13 @@ bool GameClass::keyPress(char character, int index){
     this->endTime = time(0);
 
     //check if the index is the last index of the game text and make sure it is correct
-    if (gameText->getText()[index] == character && index == gameText->getTotalChars()-1){
+    if (gameText->getText()[index] == character && index == gameText->getTotalChars()-1) {
         return true;
     }
 
     //this makes sure that if the user presses back space, it would count it as a missed character
     //if the index is greater than the variable highestIndex
-    if (gameText->getText()[index] != character && index > highestIndex){
+    if (gameText->getText()[index] != character && index > highestIndex) {
         //we set highestIndex to the new index
         highestIndex = index;
         //and we increase the number of missed chars by 1
@@ -42,7 +42,7 @@ bool GameClass::keyPress(char character, int index){
     return false;
 }
 
-void GameClass::updateStats(string userID){
+void GameClass::updateStats(string userID) {
     
     //get the StatsObject from StatsController
     StatsObject statistics = statisticsAccess->getStats(userID);
@@ -60,19 +60,19 @@ void GameClass::updateStats(string userID){
     statisticsAccess->setStats(userID, statistics);
 }
 
-vector<int> GameClass::getGameStats(){
+vector<int> GameClass::getGameStats() {
     //get the user's wpm, total racetime and number of missed characters
     //store them all in a vector of type int
     vector<int> statistics = {this->calculateWpm(), this->calculateRaceTime(), this->missedChars};
     return statistics;
 }
 
-int GameClass::getProgress(){
+int GameClass::getProgress() {
     //return the percentage after multiplying by 100
     return static_cast<int>(this->progressPercent*100);
 }
 
-int GameClass::calculateWpm(){
+int GameClass::calculateWpm() {
     //use the private method calculateRaceTime() to get the total duration
     //of the game as a integer
     int totalTime = calculateRaceTime();

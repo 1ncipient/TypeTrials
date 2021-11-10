@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+
 #include "TextObject.h"
 #include "StatsController.h"
 
@@ -81,4 +82,5 @@ class GameClass {
          */
         ~GameClass();
 };
+
 #endif // GAMECLASS_H
