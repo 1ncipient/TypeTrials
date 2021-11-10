@@ -65,7 +65,7 @@ string apiCall(string inputString) {
     result = result.substr(0, end + 1);
 
     // remove remaining unicode encoding
-    string arr[] = {"\\u005cn", "\\u005c", "\\u0022", "\\u2014" "\\u2026", "u005cn", "u005c", "u0022", "u2014", "u2026"};
+    string arr[] = {"\\u005cn", "\\u005c", "\\u0022", "\\u2014" "\\u2026", "\\u2013", "u005cn", "u005c", "u0022", "u2014", "u2026", "u2013"};
     vector<string> targets(arr, arr + sizeof(arr)/sizeof(string));
     replaceAll(result, targets, " ");
 
