@@ -33,7 +33,7 @@ bool GameClass::keyPress(char character, int index){
 
     //this makes sure that if the user presses back space, it would count it as a missed character
     //if the index is greater than the variable highestIndex
-    if (index > highestIndex){
+    if (gameText->getText()[index] != character && index > highestIndex){
         //we set highestIndex to the new index
         highestIndex = index;
         //and we increase the number of missed chars by 1
@@ -78,7 +78,7 @@ int GameClass::calculateWpm(){
     int totalTime = calculateRaceTime();
     //using the user's current index, we divide by 5 for the average word length and multiple by 60
     //for the words per minute
-    int wpm = ((this->currentIndex/5)/totalTime)*60;
+    int wpm = (((this->currentIndex/5)*60)/totalTime);
     return wpm;
 }
 
