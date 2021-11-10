@@ -1,7 +1,6 @@
 #ifndef LCONT_H
 #define LCONT_H
 
-
 #include <stdio.h>
 #include <string>
 #include <cstring>
@@ -11,25 +10,21 @@
 #include <fstream>
 #include <iostream>
 
-
 /**
  * A LoginController which uses the DatabaseController parent,
  * contains functions and information necessary
  * for user login and registration
  * 
  */
-class LoginController : public DatabaseController{
+class LoginController : public DatabaseController {
 
     private:
-
-
         /**
          * boolean variable indicating whether a successful login has been performed 
          */
         bool    loginValid;
 
         /**
-        * 
         * Private function used to find whether a usrname/password string in the file specified by LoginController.
         * 
         * @param target The strign to find
@@ -38,32 +33,26 @@ class LoginController : public DatabaseController{
         */
         int     match(std::string target, int status);
 
-
-
     public:
-        
         /**
-        * 
         * Constructor for a DatabaseController object that handles login functions
         *
         */
         LoginController();
 
         /**
-        * 
         * Empty destructor for a LoginController object
         */
         ~LoginController();
 
         /**
-        * 
         * Returns the current login status.
+        * 
         * @return Current login status
         */
         bool getStatus();
 
         /**
-        * 
         * Checks whether a valid username and pasword combo have been entered.
         * 
         * @param username username to be checked
@@ -73,7 +62,6 @@ class LoginController : public DatabaseController{
         bool login(std::string username, std::string password);
 
         /**
-        * 
         * Function called when registering a new user.
         * 
         * @param username username to register

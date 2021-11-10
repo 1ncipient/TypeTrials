@@ -1,7 +1,3 @@
-//CS3307 StatsObject Header File
-
-
-//guard
 #ifndef StatsObject_h
 #define StatsObject_h
 

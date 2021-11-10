@@ -5,11 +5,9 @@
 
 using namespace std;
 
-
 LoginUI::LoginUI(std::string &sessionUsername, QWidget *parent)
     : QMainWindow(parent)
 {
-    
     username = &sessionUsername;
 
     databaseAccess = new LoginController();
@@ -49,45 +47,35 @@ LoginUI::LoginUI(std::string &sessionUsername, QWidget *parent)
     setWindowTitle("TypeTrails Login");
 }
 
-
 LoginUI::~LoginUI() {
 
 }
 
-
-void LoginUI::handleLogin()
-{
-    //std::cout << "Login was pressed" << std::endl;
-
+void LoginUI::handleLogin() {
     QString user = usernameInput -> text().trimmed();
     QString pass = passwordInput -> text().trimmed();
     //if the login function returns ture, then login was sucessful
-    if (databaseAccess->login(user.toStdString(), pass.toStdString())){
+    if (databaseAccess->login(user.toStdString(), pass.toStdString())) {
         *(this->username) = user.toStdString();
         this->close();  //triggers the closeEvent
     }
     messageLabel -> setText("Login failed");
-
-    
 }
 
 
-void LoginUI::handleRegister()
-{
-
+void LoginUI::handleRegister() {
     QString user = usernameInput -> text().trimmed();
     QString pass = passwordInput -> text().trimmed();
     //if either the username and password are empty, or they are invalid, then fail
-    if (user.length() == 0||pass.length() == 0||!databaseAccess->userRegister(user.toStdString(), pass.toStdString())){
+    if (user.length() == 0||pass.length() == 0||!databaseAccess->userRegister(user.toStdString(), pass.toStdString())) {
         messageLabel -> setText("Registration failed");
         return;
     }
     messageLabel -> setText("Registration succeeded");
-
 }
 
 
-void LoginUI::closeEvent(QCloseEvent *event){
+void LoginUI::closeEvent(QCloseEvent *event) {
     //if getStatus returns true, function has been triggered by a successful login, so accept event
     if (databaseAccess->getStatus()) {
         event->accept();

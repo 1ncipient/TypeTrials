@@ -2,6 +2,7 @@
 #define STATSCONTROLLER_H
 
 #include <string>
+
 #include "DatabaseController.h"
 #include "StatsObject.h"
 

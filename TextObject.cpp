@@ -14,36 +14,30 @@
 
 using namespace std;
 
-TextObject::TextObject(string inputString) 
-{
+TextObject::TextObject(string inputString) {
     this->text = apiCall(inputString);
     this->totalChars = this->text.length();
     vector<string> words = split(this->text, " ");
     this->totalWords = (int) words.size();
 }
 
-TextObject::~TextObject() 
-{
+TextObject::~TextObject() {
 
 }
 
-string TextObject::getText() 
-{
+string TextObject::getText() {
     return this->text;
 }
 
-int TextObject::getTotalChars() 
-{
+int TextObject::getTotalChars() {
     return this->totalChars;
 }
 
-int TextObject::getTotalWords() 
-{
+int TextObject::getTotalWords() {
     return this->totalWords;
 }
 
-string apiCall(string inputString)
-{
+string apiCall(string inputString) {
     string command = "curl -F 'text=" + inputString + "' -H 'api-key:57c1f1eb-a7d7-46b0-bcb3-e70202d56fba' https://api.deepai.org/api/text-generator";
     const char *cmd = command.c_str();
 
@@ -77,70 +71,60 @@ string apiCall(string inputString)
 
     // replace all adjacent spaces with a single space
     string::size_type pos;
-    while((pos = result.find("  ")) != string::npos)
-    {
+    while((pos = result.find("  ")) != string::npos) {
         result.replace(pos, 2, " ");
     }
 
     return result;
 }
 
-string execSysCommand(const char *cmd)
-{
+string execSysCommand(const char *cmd) {
     array<char, 512> buffer;
     string result;
     unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
-    if (!pipe)
-    {
+    if (!pipe) {
         throw runtime_error("popen() failed!");
     }
-    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
-    {
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
         result += buffer.data();
     }
     return result;
 }
 
-string escapeJson(const string &inputString)
-{
+string escapeJson(const string &inputString) {
     ostringstream o;
-    for (int i = 0; i < (int) inputString.length(); i++)
-    {
+    for (int i = 0; i < (int) inputString.length(); i++) {
         char c = inputString.at(i);
-        if (c == '"' || c == '\\' || ('\x00' <= c && c <= '\x1f'))
-        {
+        if (c == '"' || c == '\\' || ('\x00' <= c && c <= '\x1f')) {
             o << "\\u"
               << hex << setw(4) << setfill('0') << (int)c;
         }
-        else
-        {
+        else {
             o << c;
         }
     }
     return o.str();
 }
 
-vector<string> split(string str, string sep)
-{
+vector<string> split(string str, string sep) {
     char *cstr = const_cast<char *>(str.c_str());
     char *current;
     vector<string> arr;
     current = strtok(cstr, sep.c_str());
-    while (current != NULL)
-    {
+    while (current != NULL) {
         arr.push_back(current);
         current = strtok(NULL, sep.c_str());
     }
     return arr;
 }
 
-void replaceAll(string &str, vector<string> targets, const string &to)
-{
+void replaceAll(string &str, vector<string> targets, const string &to) {
     for (int i = 0; i < (int) targets.size(); i++) {
         string from = targets.at(i);
 
-        if (from.empty())
+        if (from.empty()) {
             return;
+        }
 
         size_t start_pos = 0;
         while ((start_pos = str.find(from, start_pos)) != string::npos) {

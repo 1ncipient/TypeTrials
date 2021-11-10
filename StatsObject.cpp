@@ -1,7 +1,3 @@
-//CS3307 StatsObject C++ file
-
-
-//include header file
 #include "StatsObject.h"
 
 StatsObject::StatsObject(int wpm, int totalGames, int totalWords, int totalChars, int totalWrongChars, float accuracy) {
@@ -15,29 +11,29 @@ StatsObject::StatsObject(int wpm, int totalGames, int totalWords, int totalChars
 }
 
 
-StatsObject::~StatsObject(){
+StatsObject::~StatsObject() {
 }
 
-void StatsObject::updateWpm (int wpm){
+void StatsObject::updateWpm (int wpm) {
     this->wpm = ((this->wpm * this->totalGames) + wpm) / (this->totalGames + 1);
 }
 
-void StatsObject::incrementTotalGames (){
+void StatsObject::incrementTotalGames() {
     this->totalGames++;
 }
 
-void StatsObject::incrementTotalWords (int totalWords){
+void StatsObject::incrementTotalWords (int totalWords) {
     this->totalWords += totalWords;
 }
 
-void StatsObject::incrementTotalChars (int totalChars){
+void StatsObject::incrementTotalChars (int totalChars) {
     this->totalChars += totalChars;
 }
 
-void StatsObject::incrementTotalWrongChars(int totalWrongChars){
+void StatsObject::incrementTotalWrongChars(int totalWrongChars) {
     this->totalWrongChars += totalWrongChars;
 }
 
-void StatsObject::updateAccuracy(float accuracy){
+void StatsObject::updateAccuracy(float accuracy) {
     this->accuracy = ((this->accuracy * this->totalGames) + accuracy) / (this->totalGames + 1);
 }

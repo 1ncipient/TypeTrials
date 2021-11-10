@@ -1,8 +1,9 @@
-#include <string>
-#include <vector>
 
 #ifndef TEXTOBJECT_H
 #define TEXTOBJECT_H
+
+#include <string>
+#include <vector>
 
 /**
  * @brief A TextObject which represents the resulting parsed

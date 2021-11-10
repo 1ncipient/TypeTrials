@@ -4,8 +4,7 @@
 #include "LoginUI.h"
 #include "MainUI.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     // current users, successful login username

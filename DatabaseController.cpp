@@ -3,16 +3,16 @@
 
 using namespace std;
 
-DatabaseController::DatabaseController(){
+DatabaseController::DatabaseController() {
 }
 
 DatabaseController::~DatabaseController() {
 }
 
-string DatabaseController::getDatafile(){
+string DatabaseController::getDatafile() {
     return dataFile;
 }
 
-void DatabaseController::setDatafile(string newDataFile){
+void DatabaseController::setDatafile(string newDataFile) {
     dataFile = newDataFile;
 }

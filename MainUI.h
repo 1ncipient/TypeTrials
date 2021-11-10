@@ -46,7 +46,7 @@ class MainUI : public QMainWindow
          * When the user types via keyboard inside the text box, this method controls the game progress bar
          * as well as assigns a vector composing of the user's stats to variable stats
          * 
-         * @param text 
+         * @param text the current typed user text
          */
         void onInput(const QString &text);
 

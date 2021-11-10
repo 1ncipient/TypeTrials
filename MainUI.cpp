@@ -30,8 +30,6 @@ MainUI::MainUI(string username, QWidget *parent)
     // Create the stats button, position it, and connect to the displayStats method
     playerStats = new QPushButton("My Stats", this);
     playerStats->setGeometry(QRect(QPoint(855, 14), QSize(70, 40)));
-    // example connect function
-    // connect(passwordInput, &QLineEdit::returnPressed, this, &MainUI::handleLogin);
 
     // Create the typing game's progress bar
     gameProgress = new QProgressBar(this);
@@ -52,28 +50,21 @@ MainUI::MainUI(string username, QWidget *parent)
     typedText->setStyleSheet("font: 20px");
     typedText->setReadOnly(true);
     connect(typedText, &QLineEdit::textEdited, this, &MainUI::onInput);
-    // example connect function
-    // connect(passwordInput, &QLineEdit::returnPressed, this, &MainUI::handleLogin);
 
     // Set the default size for the window and window title
     setFixedSize(950, 550);
     setWindowTitle("TypeTrails");
 }
 
-/**
- * ~LoginUI
- * 
- * Empty destructor for a LoginUI object
- */
 MainUI::~MainUI() {
 
 }
 
-void MainUI::onInput(const QString &text){
+void MainUI::onInput(const QString &text) { 
     string entered = text.toStdString();
     char last = entered.back();
     int index = entered.length() - 1;
-    if(game->keyPress(last, index)){
+    if(game->keyPress(last, index)) {
         game->updateStats(this->userID);
         typedText->setReadOnly(true);
     }
@@ -83,13 +74,7 @@ void MainUI::onInput(const QString &text){
 
 }
 
-/**
- * startGame
- * 
- * Description
- */
-void MainUI::startGame()
-{
+void MainUI::startGame() {
     string selectedTopic = topicSelection->text().toStdString();
     if (!isValidTopic(selectedTopic)) {
         gameProgress->setValue(0);
@@ -109,8 +94,7 @@ void MainUI::startGame()
 
 }
 
-bool isValidTopic(string input)
-{
+bool isValidTopic(string input) {
     int charCount = 0;
     int puncCount = 0;
     bool valid = true;

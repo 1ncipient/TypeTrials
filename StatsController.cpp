@@ -1,24 +1,25 @@
-#include "StatsController.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <stdlib.h>
 
+#include "StatsController.h"
+
 using namespace std;
 
-StatsController::StatsController(){
+StatsController::StatsController() {
 }
 
 StatsController::~StatsController() {
 }
 
-StatsObject StatsController::getStats(string userID){
+StatsObject StatsController::getStats(string userID) {
     // Open file with format: userID,wpm,totalgames,totalwords,totalchars,totalwrongchars,accuracy
     ifstream statsData;
     statsData.open("stats.txt");
 
-    if (!statsData.is_open()){
+    if (!statsData.is_open()) {
         cout<<"File doesn't exist";
     }
 
@@ -38,7 +39,7 @@ StatsObject StatsController::getStats(string userID){
     }
 
     // if user doesn't exist, create an entry and set initial statistics to default values of 0
-    if (dataTokens.size() == 0){
+    if (dataTokens.size() == 0) {
         StatsObject statsObj;
         this->setStats(userID, statsObj);
         userStats = statsObj;
@@ -53,7 +54,7 @@ StatsObject StatsController::getStats(string userID){
     return userStats;
 }
 
-void StatsController::setStats(string userID, StatsObject newStats){
+void StatsController::setStats(string userID, StatsObject newStats) {
     // open files for storage and temporary storage
     string statsFilePath = "stats.txt";
     string tempStatsFilePath = "tempstats.txt";
@@ -65,8 +66,8 @@ void StatsController::setStats(string userID, StatsObject newStats){
 
     // search for ID from file, copy over all data except the one corresponding to userID
     string line;
-    while (getline(statsData, line)){
-        if (line.find(userID) == string::npos){
+    while (getline(statsData, line)) {
+        if (line.find(userID) == string::npos) {
             tempFile << line << endl;
         }
     }
