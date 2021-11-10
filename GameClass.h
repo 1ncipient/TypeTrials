@@ -3,11 +3,8 @@
 
 #include <string>
 #include <vector>
-
 #include "TextObject.h"
 #include "StatsController.h"
-
-using namespace std;
 
 /**
  * @brief this is the header file for the GameClass object
@@ -62,14 +59,14 @@ class GameClass {
          * 
          * @param userID the variable is the user's ID that will be used to find their stats
          */
-        void updateStats(string userID);
+        void updateStats(std::string userID);
 
         /**
          * @brief this method uses the private methods to get statistics about the user's current statistics
          * 
          * @return vector<int> the is a vector containing information such as wpm, total game time and missed characters
          */
-        vector<int> getGameStats();
+        std::vector<int> getGameStats();
 
         /**
          * @brief Get the progress variable after multiplying by 100
