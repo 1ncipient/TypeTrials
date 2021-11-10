@@ -55,6 +55,5 @@ compile_commands.json
 
 .vscode
 *.sh
-*.pro
 *.app
 *.txt
