@@ -17,7 +17,7 @@ class TextObject {
          * 
          * @param inputString The desired text to be used for AI auto-text generation
          */
-        TextObject(std::string inputString);
+        TextObject(std::string inputString, bool generate);
 
         /**
          * @brief Destroy the Text Object:: Text Object object. Empty destructor

@@ -1,5 +1,6 @@
 #include <ctime>
 #include <iostream>
+#include <algorithm>
 
 #include "GameClass.h"
 
@@ -13,10 +14,14 @@ GameClass::GameClass(TextObject *text, StatsController *stats) {
     this->highestIndex = -1;
     this->progressPercent = 0.0;
     this->currentIndex = 0;
-    this->startTime = time(0);
+    this->startTime = -1;
 }
 
 bool GameClass::keyPress(char character, int index) {
+    if (this->startTime == -1) {
+        startTime = time(0);
+    }
+
     //store the index in the variable currentIndex
     this->currentIndex = index;
 
@@ -87,7 +92,7 @@ int GameClass::calculateRaceTime(){
     long int start = static_cast<long int> (this->startTime);
     long int end = static_cast<long int> (this->endTime);
     //calculate the duration of the game
-    long int duration = end - start;
+    long int duration = max(end - start, (long) 1);
     //cast it as a integer
     int totalTime = duration;
     return totalTime;

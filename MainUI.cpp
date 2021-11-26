@@ -1,6 +1,8 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <fstream>
+#include <streambuf>
 
 #include "MainUI.h"
 
@@ -21,8 +23,19 @@ MainUI::MainUI(string username, QWidget *parent)
 
     // Create the play button, position it, and connect to the startGame method
     playButton = new QPushButton("Enter TypeTrials", this);
-    playButton->setGeometry(QRect(QPoint(185, 14), QSize(120, 41)));
-    connect(playButton, &QPushButton::released, this, &MainUI::startGame);
+    playButton->setGeometry(QRect(QPoint(175, 14), QSize(120, 41)));
+    connect(playButton, &QPushButton::released, this, [this]{ MainUI::startGame(""); });
+
+    // Create the import button, position it, and connect to the processImport method
+    importButton = new QPushButton("Import Text", this);
+    importButton->setGeometry(QRect(QPoint(310, 14), QSize(120, 41)));
+    connect(importButton, &QPushButton::released, this, &MainUI::processImport);
+
+    textSelector = new QComboBox(this);
+    textSelector->setGeometry(QRect(QPoint(445, 14), QSize(175, 41)));
+    commands = { "", "Computer Science", "Western University", "Cooking", "Harry Potter", "Music", "Cars"};
+    textSelector->addItems(commands);
+    connect(textSelector, &QComboBox::currentTextChanged, this, &MainUI::dropdownSelection);
 
     // Create the stats button, position it, and connect to the displayStats method
     playerStats = new QPushButton("My Stats", this);
@@ -62,6 +75,95 @@ MainUI::~MainUI() {
 
 }
 
+void MainUI::startGame(string desiredText) {
+    //get the topic the user entered
+    string inputtedTopic = topicSelection->text().toStdString();
+
+    //if the inputtedTopic, desiredText, and textSelector are all not valid, then reset the game and return
+    if (!isValidTopic(inputtedTopic) and !isValidTopic(desiredText) and this->textSelector->currentText().toStdString() == "") {
+        //reset these variables and text, so the user can enter a valid topic
+        gameProgress->setValue(0);
+        typedText->setText("");
+        gameText->setText("");
+        topicSelection->setText("");
+        currentStats->setText("wpm: 0, missed characters: 0");
+        return;
+    }
+
+    TextObject *test;
+    // if the desiredText is not set, then a user submitted a topic
+    if (desiredText == "") {
+        test = new TextObject(inputtedTopic, true);
+    }
+    // otherwise, desiredText was selected from imported text or the drop down topic
+    else {
+        test = new TextObject(desiredText, false);
+    }
+     
+    //create a new GameClass
+    game = new GameClass(test, statisticsAccess);
+    //allow the user to type
+    typedText->setReadOnly(false);
+    //change the text to the text from the api
+    gameText->setText(QString::fromStdString(test->getText()));
+    //reset these variables and text for the next game
+    gameProgress->setValue(0);
+    typedText->setText("");
+    topicSelection->setText("");
+    currentStats->setText("wpm: 0, missed characters: 0");
+
+}
+
+void MainUI::processImport() {
+    fileName = QFileDialog::getOpenFileName(this,
+    tr("Open Text File"), ".", tr("Text Files (*.txt)")).toStdString();
+
+    // process the textfile and load it as a string
+    ifstream fileStream(fileName);
+    string fileString((std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>());
+    
+    // strip newlines and replace with a space
+    string::size_type pos;
+    while((pos = fileString.find("\n")) != string::npos) {
+        fileString.replace(pos, 1, " ");
+    }
+
+    // replace all adjacent spaces with a single space
+    while((pos = fileString.find("  ")) != string::npos) {
+        fileString.replace(pos, 2, " ");
+    }
+
+    this->startGame(fileString);
+}
+
+void MainUI::dropdownSelection() {
+    string currentSelectedTopic = this->textSelector->currentText().toStdString();
+    string::size_type pos;
+    while((pos = currentSelectedTopic.find(" ")) != string::npos) {
+        currentSelectedTopic.replace(pos, 1, "");
+    }
+
+    // if the selected topic is empty, then reset the game and return
+    if (currentSelectedTopic == "") {
+        //reset these variables and text, so the user can enter a valid topic
+        gameProgress->setValue(0);
+        typedText->setText("");
+        gameText->setText("");
+        topicSelection->setText("");
+        currentStats->setText("wpm: 0, missed characters: 0");
+        return;
+    }
+
+    fileName = "./PredefinedText/" + currentSelectedTopic + ".txt";
+    cout << fileName << endl;
+
+    // process the textfile and load it as a string
+    ifstream fileStream(fileName);
+    string fileString((std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>());
+
+    this->startGame(fileString);
+}
+
 void MainUI::onInput(const QString &text) {
     //get the string in the user typed in the QTextEdit
     string entered = text.toStdString();
@@ -96,37 +198,6 @@ void MainUI::onInput(const QString &text) {
     string statistics =  holdString.str();
     //change the text in the QLabel
     currentStats->setText(QString::fromStdString(statistics));
-}
-
-void MainUI::startGame() {
-    //get the topic the user entered
-    string selectedTopic = topicSelection->text().toStdString();
-
-    //call isValidTopic for input validation
-    if (!isValidTopic(selectedTopic)) {
-        //reset these variables and text, so the user can enter a valid topic
-        gameProgress->setValue(0);
-        typedText->setText("");
-        gameText->setText("");
-        topicSelection->setText("");
-        currentStats->setText("wpm: 0, missed characters: 0");
-        return;
-    }
-
-    //if the topic is valid, create a new textobject with the given topic
-    TextObject *test = new TextObject(selectedTopic);
-    //create a new GameClass
-    game = new GameClass(test, statisticsAccess);
-    //allow the user to type
-    typedText->setReadOnly(false);
-    //change the text to the text from the api
-    gameText->setText(QString::fromStdString(test->getText()));
-    //reset these variables and text for the next game
-    gameProgress->setValue(0);
-    typedText->setText("");
-    topicSelection->setText("");
-    currentStats->setText("wpm: 0, missed characters: 0");
-
 }
 
 bool isValidTopic(string input) {

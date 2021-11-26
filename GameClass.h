@@ -15,12 +15,12 @@ class GameClass {
     private:
         //these are all the private variables stored in the object
         TextObject *gameText;
-        int missedChars;
-        time_t startTime, endTime;
-        float progressPercent;
         StatsController *statisticsAccess;
-        int currentIndex;
+        int missedChars;
         int highestIndex;
+        float progressPercent;
+        int currentIndex;
+        time_t startTime, endTime;        
 
         /**
          * @brief this private method will calculate the user's wpm

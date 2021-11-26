@@ -39,8 +39,21 @@ class MainUI : public QMainWindow
         /**
          * @brief Sets up the application window to start a new typing game.
          * 
+         * @param desiredText the desired text to be used for typing game. If empty string, it will use user inputed topic
          */
-        void startGame();
+        void startGame(std::string desiredText);
+
+        /**
+         * @brief Opens a file explorer for text file upload and starts a new typing game.
+         * 
+         */
+        void processImport();
+
+        /**
+         * @brief When the dropdown selection is changed, start a new typing game.
+         * 
+         */
+        void dropdownSelection();
 
         /**
          * When the user types via keyboard inside the text box, this method controls the game progress bar
@@ -57,11 +70,15 @@ class MainUI : public QMainWindow
         GameClass *game;
         QLineEdit *topicSelection;
         QPushButton *playButton;
+        QPushButton *importButton;
+        QComboBox *textSelector;
+        QStringList commands;
         QPushButton *playerStats;
         QProgressBar *gameProgress;
         QTextEdit *gameText;
         QLineEdit *typedText;
         QLabel *currentStats;
+        std::string fileName;
 };
 
 /**

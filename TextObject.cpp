@@ -14,8 +14,13 @@
 
 using namespace std;
 
-TextObject::TextObject(string inputString) {
-    this->text = apiCall(inputString);
+TextObject::TextObject(string inputString, bool generate) {
+    if (generate == true) {
+        this->text = apiCall(inputString);
+    }
+    else {
+        this->text = inputString;
+    }
     this->totalChars = this->text.length();
     vector<string> words = split(this->text, " ");
     this->totalWords = (int) words.size();
