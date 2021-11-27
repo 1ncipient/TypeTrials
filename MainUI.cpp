@@ -33,7 +33,7 @@ MainUI::MainUI(string username, QWidget *parent)
 
     textSelector = new QComboBox(this);
     textSelector->setGeometry(QRect(QPoint(445, 14), QSize(175, 41)));
-    commands = { "", "Computer Science", "Western University", "Cooking", "Harry Potter", "Music", "Cars"};
+    commands << "" << "Computer Science" << "Western University" << "Cooking" << "Harry Potter" << "Music" << "Cars";
     textSelector->addItems(commands);
     connect(textSelector, &QComboBox::currentTextChanged, this, &MainUI::dropdownSelection);
 
