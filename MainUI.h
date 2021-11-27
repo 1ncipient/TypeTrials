@@ -63,6 +63,12 @@ class MainUI : public QMainWindow
          */
         void onInput(const QString &text);
 
+        /**
+         * @brief Display the stats of the current user
+         * 
+         */
+        void statsPopUp();
+
     private:
         //instance variables
         std::string userID;

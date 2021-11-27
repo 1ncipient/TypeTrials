@@ -44,6 +44,14 @@ class StatsController: public DatabaseController {
          * @param StatsObject The StatsObject containing various typing statistics
          */
         void setStats(std::string, StatsObject);
+
+        /**
+         * @brief Create an html string representation of a user's statistics
+         *
+         * @param str userID of a user to get statistics for
+         * @return str String containing html representation of all statistics for that user
+         */
+         std::string printStats(std::string);
 };
 
 #endif // STATSCONTROLLER_H
