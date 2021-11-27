@@ -233,12 +233,14 @@ bool isValidTopic(string input) {
 
 void MainUI::statsPopUp()
 {
+    // grab stats of current user
     string userStatsText = this->statisticsAccess->printStats(this->userID);
     string statsText = 
                     "<b>" + this->userID + "'s Statistics<br><br></b>"+
                     userStatsText;
 
     QString qStatsText = QString::fromStdString(statsText);
-    QMessageBox::information(this, "My Stats",
-                    qStatsText);
+    
+    // create popup to display stats
+    QMessageBox::information(this, "My Stats", qStatsText);
 }
