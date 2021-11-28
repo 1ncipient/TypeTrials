@@ -55,12 +55,12 @@ void GameClass::updateStats(string userID) {
     vector<int> data = this->getGameStats();
 
     //update all of the stats in the StatsObject
-    statistics.updateWpm(data[0]);
     statistics.incrementTotalGames();
+    statistics.updateWpm(data[0]);
     statistics.incrementTotalWords(gameText->getTotalWords());
-    statistics.incrementTotalChars(gameText->getTotalChars()-1);
+    statistics.incrementTotalChars(gameText->getTotalChars());
     statistics.incrementTotalWrongChars(this->missedChars);
-    float accuracy = static_cast<float>((gameText->getTotalChars()-1) - this->missedChars)/(gameText->getTotalChars()-1);
+    float accuracy = static_cast<float>((gameText->getTotalChars()) - this->missedChars)/(gameText->getTotalChars());
     statistics.updateAccuracy(accuracy*100.0);
     statisticsAccess->setStats(userID, statistics);
 }
