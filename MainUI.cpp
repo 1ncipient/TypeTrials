@@ -40,6 +40,7 @@ MainUI::MainUI(string username, QWidget *parent)
     // Create the stats button, position it, and connect to the displayStats method
     playerStats = new QPushButton("My Stats", this);
     playerStats->setGeometry(QRect(QPoint(855, 14), QSize(70, 40)));
+    connect(playerStats, &QPushButton::clicked, this, &MainUI::statsPopUp);
 
     // Create the typing game's progress bar
     gameProgress = new QProgressBar(this);
@@ -228,4 +229,18 @@ bool isValidTopic(string input) {
         valid = false;
     }
 	return valid;
+}
+
+void MainUI::statsPopUp()
+{
+    // grab stats of current user
+    string userStatsText = this->statisticsAccess->printStats(this->userID);
+    string statsText = 
+                    "<b>" + this->userID + "'s Statistics<br><br></b>"+
+                    userStatsText;
+
+    QString qStatsText = QString::fromStdString(statsText);
+    
+    // create popup to display stats
+    QMessageBox::information(this, "My Stats", qStatsText);
 }

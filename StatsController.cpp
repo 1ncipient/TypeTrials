@@ -101,3 +101,19 @@ void StatsController::setStats(string userID, StatsObject newStats) {
 
     userStats = newStats;
 }
+
+string StatsController::printStats(string userID){
+    // get stats object for user
+    StatsObject statsObj = getStats(userID);
+
+    // construct html string of statistics
+    string dataStr = 
+        "Average WPM:\t" + to_string(statsObj.getWpm()) + "<br>" +
+        "Total Games:\t" + to_string(statsObj.getTotalGames()) + "<br>" +
+        "Words Typed:\t" + to_string(statsObj.getTotalWords()) + "<br>" +
+        "Chars Typed:\t" + to_string(statsObj.getTotalChars()) + "<br>" +
+        "Chars Typed Incorrectly: " + to_string(statsObj.getTotalChars()) + "<br>" +
+        "Average Accuracy:\t" + to_string(statsObj.getAccuracy());
+
+    return dataStr;
+}
