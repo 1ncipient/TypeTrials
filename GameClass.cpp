@@ -61,6 +61,7 @@ void GameClass::updateStats(string userID) {
     statistics.incrementTotalChars(gameText->getTotalChars());
     statistics.incrementTotalWrongChars(this->missedChars);
     float accuracy = static_cast<float>((gameText->getTotalChars()) - this->missedChars)/(gameText->getTotalChars());
+    cout << accuracy << " " << gameText->getTotalChars() << " "<< this->missedChars<<endl;
     statistics.updateAccuracy(accuracy*100.0);
     statisticsAccess->setStats(userID, statistics);
 }
