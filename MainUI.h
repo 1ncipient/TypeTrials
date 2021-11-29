@@ -3,7 +3,9 @@
 
 #include <QtWidgets>
 #include <string>
-
+#include <vector>
+#include "StatsController.h"
+#include "TextObject.h"
 #include "GameClass.h"
 
 namespace Ui
@@ -68,6 +70,7 @@ class MainUI : public QMainWindow
         std::string userID;
         StatsController *statisticsAccess;
         GameClass *game;
+        TextObject *toType;
         QLineEdit *topicSelection;
         QPushButton *playButton;
         QPushButton *importButton;
@@ -79,6 +82,7 @@ class MainUI : public QMainWindow
         QLineEdit *typedText;
         QLabel *currentStats;
         std::string fileName;
+        std::vector<int> wrongIndex;
 };
 
 /**
