@@ -191,46 +191,78 @@ void MainUI::onInput(const QString &text) {
         typedText->setReadOnly(true);
     }
 
+    //make sure that the vector of incorrect indexes is not empty
+    //so we dont get any unexpected results
     if (!wrongIndex.empty()){
+        //sort the array
         sort(wrongIndex.begin(), wrongIndex.end());
+        //we check to see if the highest incorrect index in vector is greater than the current index
         while(wrongIndex.back() >= index){
+            //if it is the very last incorrect index then we can just clear the vector
             if (wrongIndex.size() <= 1){
                 wrongIndex.clear();
                 break;
             }
+            //otherwise we will just pop the last index out and remove it
             wrongIndex.pop_back();
 
         }
     }
+
+    //if the vector is empty, there are no errors
     if (wrongIndex.empty()){
+        //this is just a way to simply change the colour to black, and make sure nothing is highlighted
         gameText->setText(QString::fromStdString(toType->getText()));
     }
 
+    //if the index of the character the user entered is -1 
+    //only possible when they backspace and no character are entered
+    //this means the QLineEdit is empty and thus the user didnt enter anything yet
     if (index == -1){
+        //we can just use this to make sure everything is black and not highlighted
         gameText->setText(QString::fromStdString(toType->getText()));
     }
+    //if the character the user entered is incorrect
     else if (entered.back() != toType->getText()[index]){
-
+        //variable keeps track of the previous incorrect index
         int previous = 0;
+        //variable tells us if the incorrect index already exists or not
         bool exists = false;
+
+        //if the vector is not empty
         if (!wrongIndex.empty()){
+            //we can search through the vector for the index and if it exists within
             if (binary_search(wrongIndex.begin(), wrongIndex.end(), index)){
+                //change variable to tell us index already exists in the vector
                 exists = true;
             }
         }
+
+        //if the index does not exist in the vector
         if (!exists){
+            //we can add the index to the end of the vector
             wrongIndex.push_back(index);
+            //sort just in case the vector is not in order
             sort(wrongIndex.begin(), wrongIndex.end());
         }
+        //we clear the text in the QTextEdit
         gameText->clear();
+        //iterate through every index in the vector
         for (int i : wrongIndex){
+            //insert text from the previous wrong index (0 for the first iteration) up to the character before the wrong index
             gameText->insertPlainText(QString::fromStdString(toType->getText().substr(previous, i-previous)));
+            //move the cursor to the end
             gameText->moveCursor (QTextCursor::End);
+            //change the colour to red
             gameText->setTextColor(Qt::red);
+            //insert the wrong character, which will be highlighted red
             gameText->insertPlainText(QString(QChar(toType->getText()[i])));
+            //change the colour back to black
             gameText->setTextColor(Qt::black);
+            //set the previous wrong index to the correct one
             previous = i+1;
         }
+        //after the loop, we insert the remaining text back into the QTextEdit
         gameText->insertPlainText(QString::fromStdString(toType->getText().substr(wrongIndex.back()+1)));
     }
 

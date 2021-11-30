@@ -15,7 +15,7 @@ StatsObject::~StatsObject() {
 }
 
 void StatsObject::updateWpm (int wpm) {
-    this->wpm = ((this->wpm * this->totalGames) + wpm) / (this->totalGames);
+    this->wpm = ((this->wpm * this->totalGames) + wpm) / (this->totalGames + 1);
 }
 
 void StatsObject::incrementTotalGames() {
@@ -35,5 +35,5 @@ void StatsObject::incrementTotalWrongChars(int totalWrongChars) {
 }
 
 void StatsObject::updateAccuracy(float accuracy) {
-    this->accuracy = ((this->accuracy * this->totalGames) + accuracy) / (this->totalGames);
+    this->accuracy = ((this->accuracy * this->totalGames) + accuracy) / (this->totalGames + 1);
 }
