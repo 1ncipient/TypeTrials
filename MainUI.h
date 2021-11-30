@@ -36,8 +36,8 @@ class MainUI : public QMainWindow
         explicit MainUI(std::string username, QWidget *parent = nullptr);
 
         /**
-         * Destructor for MainUI object. It is called when the delete operator is utilized.
-         * @brief Destructor
+         * 
+         * @brief Destructor for MainUI object. It is called when the delete operator is utilized.
          * 
          */
         ~MainUI();
