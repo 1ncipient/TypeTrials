@@ -3,6 +3,7 @@
 #include <sstream>
 #include <fstream>
 #include <streambuf>
+#include <algorithm>
 
 #include "MainUI.h"
 
@@ -15,7 +16,7 @@ MainUI::MainUI(string username, QWidget *parent)
     userID = username;
     //create a new stats controller to update and store stats later
     statisticsAccess = new StatsController();
-
+    wrongIndex = {};
     // Create the topic selection input field and position it
     topicSelection = new QLineEdit(this);
     topicSelection->setGeometry(QRect(QPoint(25, 15), QSize(140, 40)));
@@ -88,30 +89,31 @@ void MainUI::startGame(string desiredText) {
         gameText->setText("");
         topicSelection->setText("");
         currentStats->setText("wpm: 0, missed characters: 0");
+        wrongIndex.clear();
         return;
     }
 
-    TextObject *test;
     // if the desiredText is not set, then a user submitted a topic
     if (desiredText == "") {
-        test = new TextObject(inputtedTopic, true);
+        toType = new TextObject(inputtedTopic, true);
     }
     // otherwise, desiredText was selected from imported text or the drop down topic
     else {
-        test = new TextObject(desiredText, false);
+        toType = new TextObject(desiredText, false);
     }
      
     //create a new GameClass
-    game = new GameClass(test, statisticsAccess);
+    game = new GameClass(toType, statisticsAccess);
     //allow the user to type
     typedText->setReadOnly(false);
     //change the text to the text from the api
-    gameText->setText(QString::fromStdString(test->getText()));
+    gameText->setText(QString::fromStdString(toType->getText()));
     //reset these variables and text for the next game
     gameProgress->setValue(0);
     typedText->setText("");
     topicSelection->setText("");
     currentStats->setText("wpm: 0, missed characters: 0");
+    wrongIndex.clear();
 
 }
 
@@ -174,13 +176,55 @@ void MainUI::onInput(const QString &text) {
 
     //get the index of the very last character
     int index = entered.length() - 1;
-
     //call the method keyPress(), if true, they reached the end of the game
     if (game->keyPress(last, index)) {
         //update the stats of the user
         game->updateStats(this->userID);
         //do not allow the user to keep typing
         typedText->setReadOnly(true);
+    }
+
+    if (!wrongIndex.empty()){
+        sort(wrongIndex.begin(), wrongIndex.end());
+        while(wrongIndex.back() >= index){
+            if (wrongIndex.size() <= 1){
+                wrongIndex.clear();
+                break;
+            }
+            wrongIndex.pop_back();
+
+        }
+    }
+    if (wrongIndex.empty()){
+        gameText->setText(QString::fromStdString(toType->getText()));
+    }
+
+    if (index == -1){
+        gameText->setText(QString::fromStdString(toType->getText()));
+    }
+    else if (entered.back() != toType->getText()[index]){
+
+        int previous = 0;
+        bool exists = false;
+        if (!wrongIndex.empty()){
+            if (binary_search(wrongIndex.begin(), wrongIndex.end(), index)){
+                exists = true;
+            }
+        }
+        if (!exists){
+            wrongIndex.push_back(index);
+            sort(wrongIndex.begin(), wrongIndex.end());
+        }
+        gameText->clear();
+        for (int i : wrongIndex){
+            gameText->insertPlainText(QString::fromStdString(toType->getText().substr(previous, i-previous)));
+            gameText->moveCursor (QTextCursor::End);
+            gameText->setTextColor(Qt::red);
+            gameText->insertPlainText(QString(QChar(toType->getText()[i])));
+            gameText->setTextColor(Qt::black);
+            previous = i+1;
+        }
+        gameText->insertPlainText(QString::fromStdString(toType->getText().substr(wrongIndex.back()+1)));
     }
 
     //get the progress and cast it as a integer
