@@ -9,6 +9,7 @@
  * @brief A TextObject which represents the resulting parsed
  * text from an AI auto text generation API call
  * 
+ * @author Jacob Chun (jchun263)
  */
 class TextObject { 
     public:

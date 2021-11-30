@@ -10,8 +10,9 @@ namespace Ui
 }
 
 /**
- * A class representing the login screen
+ * @brief A class representing the login screen
  * 
+ * @author Jacob Chun (jchun263)
  */
 class LoginUI : public QMainWindow
 {
@@ -30,7 +31,7 @@ class LoginUI : public QMainWindow
 
     public:
         /**
-        * Constructor for a MainWindow object, initializes the application window
+        * @brief Constructor for a MainWindow object, initializes the application window
         *
         * @param parent optional widget parent, can be a null pointer
         * @param sessionUsername Username for the current user
@@ -38,20 +39,18 @@ class LoginUI : public QMainWindow
         explicit LoginUI(std::string &username, QWidget *parent = nullptr);
 
         /**
-        * 
-        * 
-        * Empty destructor for a LoginUI object
+        * @brief Empty destructor for a LoginUI object
         */
         ~LoginUI();
 
     private slots:
         /**
-        * This function is called when the user presses the "Login" button
+        * @brief This function is called when the user presses the "Login" button
         */
         void handleLogin();
 
         /**
-        * This function is called when the user presses the Register button. 
+        * @brief This function is called when the user presses the Register button. 
         * It checks if a unique, valid username and unique password has been chosen, 
         * and writes them to the file specified in databaseAccess
         * 
@@ -59,23 +58,23 @@ class LoginUI : public QMainWindow
         void handleRegister();
 
     private:
-        /** Variable holding pointer to the username*/
+        /** @brief Variable holding pointer to the username*/
         std::string *username;
-        /** Label for the username entry field*/
+        /** @brief Label for the username entry field*/
         QLabel *usernameLabel;
-        /** Area for entering username*/
+        /** @brief Area for entering username*/
         QLineEdit *usernameInput;
-        /** Label for the password entry field*/
+        /** @brief Label for the password entry field*/
         QLabel *passwordLabel;
-        /** Area for entering password*/
+        /** @brief Area for entering password*/
         QLineEdit *passwordInput;
-        /** Label which displays messages to user*/
+        /** @brief Label which displays messages to user*/
         QLabel *messageLabel;
-        /** Button for login*/
+        /** @brief Button for login*/
         QPushButton *loginButton;
-        /** Button for registration*/
+        /** @brief Button for registration*/
         QPushButton *registerButton;
-        /** LoginController which does  login and registration file handling*/
+        /** @brief LoginController which does  login and registration file handling*/
         LoginController *databaseAccess;
 };
 

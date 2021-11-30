@@ -112,7 +112,7 @@ string StatsController::printStats(string userID){
         "Total Games:\t" + to_string(statsObj.getTotalGames()) + "<br>" +
         "Words Typed:\t" + to_string(statsObj.getTotalWords()) + "<br>" +
         "Chars Typed:\t" + to_string(statsObj.getTotalChars()) + "<br>" +
-        "Chars Typed Incorrectly: " + to_string(statsObj.getTotalChars()) + "<br>" +
+        "Chars Typed Incorrectly: " + to_string(statsObj.getTotalWrongChars()) + "<br>" +
         "Average Accuracy:\t" + to_string(statsObj.getAccuracy());
 
     return dataStr;

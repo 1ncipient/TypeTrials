@@ -4,6 +4,8 @@
 /**
  * @brief StatsObject class used for user personal typing stats.
  * 
+ * @author Henry So (hso28)
+ * @author Adrian Yung (ayung8)
  */
 class StatsObject {
     private:
@@ -17,8 +19,7 @@ class StatsObject {
 
     public:
     /**
-     * Create a new StatsObject with default values 0 for int, and 0 for float respectively.
-     * @brief Constructor
+     * @brief Create a new StatsObject with default values 0 for int, and 0 for float respectively.
      * 
      * @param wpm Words typed per minute stat.
      * @param totalGames Total games played by user stat.
@@ -30,8 +31,7 @@ class StatsObject {
     StatsObject(int wpm = 0, int totalGames = 0, int totalWords = 0, int totalChars = 0, int totalWrongChars = 0, float accuracy = 0.0);
 
     /**
-     * Destructor for StatsObject object. Called when delete operator is utilized.
-     * @brief Destructor
+     * @brief Destructor for StatsObject object. Called when delete operator is utilized.
      * 
      */
     ~StatsObject();

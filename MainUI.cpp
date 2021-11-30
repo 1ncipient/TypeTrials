@@ -19,22 +19,23 @@ MainUI::MainUI(string username, QWidget *parent)
     wrongIndex = {};
     // Create the topic selection input field and position it
     topicSelection = new QLineEdit(this);
-    topicSelection->setGeometry(QRect(QPoint(25, 15), QSize(140, 40)));
+    topicSelection->setGeometry(QRect(QPoint(25, 15), QSize(170, 40)));
     topicSelection->setStyleSheet("font: 20px");
+    topicSelection->setPlaceholderText("Enter text seed...");
 
     // Create the play button, position it, and connect to the startGame method
-    playButton = new QPushButton("Enter TypeTrials", this);
-    playButton->setGeometry(QRect(QPoint(175, 14), QSize(120, 41)));
+    playButton = new QPushButton("Submit Seed", this);
+    playButton->setGeometry(QRect(QPoint(205, 14), QSize(120, 41)));
     connect(playButton, &QPushButton::released, this, [this]{ MainUI::startGame(""); });
 
     // Create the import button, position it, and connect to the processImport method
-    importButton = new QPushButton("Import Text", this);
-    importButton->setGeometry(QRect(QPoint(310, 14), QSize(120, 41)));
+    importButton = new QPushButton("Import Game Text", this);
+    importButton->setGeometry(QRect(QPoint(340, 14), QSize(120, 41)));
     connect(importButton, &QPushButton::released, this, &MainUI::processImport);
 
     textSelector = new QComboBox(this);
-    textSelector->setGeometry(QRect(QPoint(445, 14), QSize(175, 41)));
-    commands << "" << "Computer Science" << "Western University" << "Cooking" << "Harry Potter" << "Music" << "Cars";
+    textSelector->setGeometry(QRect(QPoint(475, 14), QSize(175, 41)));
+    commands << "Select Sample Text" << "Computer Science" << "Western University" << "Cooking" << "Harry Potter" << "Music" << "Cars";
     textSelector->addItems(commands);
     connect(textSelector, &QComboBox::currentTextChanged, this, &MainUI::dropdownSelection);
 
@@ -49,12 +50,17 @@ MainUI::MainUI(string username, QWidget *parent)
     gameProgress->setRange(0, 100);
     gameProgress->setValue(0);
 
+    // Initialize avatar
+    pixmap = *(new QPixmap("avatar.png"));
+    avatar = new QLabel("", this);
+    avatar -> setGeometry(QRect(QPoint(5,60), QSize(40,40)));
+    avatar->setPixmap((pixmap).scaled(avatar->width(),avatar->height()));
+
     // Create the gameText QTextEdit box and position it
     gameText = new QTextEdit(this);
     gameText->setGeometry(QRect(QPoint(25, 110), QSize(900, 250)));
     gameText->setReadOnly(true);
     gameText->setStyleSheet("font: 20px");
-    gameText->setText("Please enter a topic in the above text box.");
 
     // Create the user typed text input field, position it, and connect to the onInput method
     typedText = new QLineEdit(this);
@@ -82,9 +88,10 @@ void MainUI::startGame(string desiredText) {
     string inputtedTopic = topicSelection->text().toStdString();
 
     //if the inputtedTopic, desiredText, and textSelector are all not valid, then reset the game and return
-    if (!isValidTopic(inputtedTopic) and !isValidTopic(desiredText) and this->textSelector->currentText().toStdString() == "") {
+    if (!isValidTopic(inputtedTopic) and !isValidTopic(desiredText) and this->textSelector->currentText().toStdString() == "Select Sample Text") {
         //reset these variables and text, so the user can enter a valid topic
         gameProgress->setValue(0);
+        this->resetAvatar();
         typedText->setText("");
         gameText->setText("");
         topicSelection->setText("");
@@ -110,11 +117,11 @@ void MainUI::startGame(string desiredText) {
     gameText->setText(QString::fromStdString(toType->getText()));
     //reset these variables and text for the next game
     gameProgress->setValue(0);
+    this->resetAvatar();
     typedText->setText("");
     topicSelection->setText("");
     currentStats->setText("wpm: 0, missed characters: 0");
     wrongIndex.clear();
-
 }
 
 void MainUI::processImport() {
@@ -150,6 +157,7 @@ void MainUI::dropdownSelection() {
     if (currentSelectedTopic == "") {
         //reset these variables and text, so the user can enter a valid topic
         gameProgress->setValue(0);
+        this->resetAvatar();
         typedText->setText("");
         gameText->setText("");
         topicSelection->setText("");
@@ -158,7 +166,6 @@ void MainUI::dropdownSelection() {
     }
 
     fileName = "./PredefinedText/" + currentSelectedTopic + ".txt";
-    cout << fileName << endl;
 
     // process the textfile and load it as a string
     ifstream fileStream(fileName);
@@ -232,6 +239,10 @@ void MainUI::onInput(const QString &text) {
     //set the progress bar to the progress given
     gameProgress->setValue(progress);
 
+    //set new location of avatar
+    int newloc = 5+9*gameProgress->value();
+    avatar -> setGeometry(QRect(QPoint(newloc,60), QSize(40,40)));
+
     //call getGameStats() to get the stats of the current game
     vector<int> stats = game->getGameStats();
 
@@ -275,8 +286,7 @@ bool isValidTopic(string input) {
 	return valid;
 }
 
-void MainUI::statsPopUp()
-{
+void MainUI::statsPopUp() {
     // grab stats of current user
     string userStatsText = this->statisticsAccess->printStats(this->userID);
     string statsText = 
@@ -287,4 +297,8 @@ void MainUI::statsPopUp()
     
     // create popup to display stats
     QMessageBox::information(this, "My Stats", qStatsText);
+}
+
+void MainUI::resetAvatar() {
+    avatar -> setGeometry(QRect(QPoint(5,60), QSize(40,40)));
 }

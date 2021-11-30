@@ -16,6 +16,11 @@ namespace Ui
 /**
  * @brief MainUI class used for displaying a an interactive UI for the user.
  * 
+ * @author Jacob Chun (jchun263)
+ * @author Daniel Niu (yniu54)
+ * @author Henry So (hso28)
+ * @author Samuel Su (ssu53)
+ * @author Adrian Yung (ayung8)
  */
 class MainUI : public QMainWindow
 {
@@ -71,6 +76,12 @@ class MainUI : public QMainWindow
          */
         void statsPopUp();
 
+        /**
+         * @brief Resets the user avatar to the starting location
+         * 
+         */
+        void resetAvatar();
+
     private:
         //instance variables
         std::string userID;
@@ -89,6 +100,8 @@ class MainUI : public QMainWindow
         QLabel *currentStats;
         std::string fileName;
         std::vector<int> wrongIndex;
+        QPixmap pixmap;
+        QLabel *avatar;
 };
 
 /**

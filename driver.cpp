@@ -15,9 +15,6 @@ int main(int argc, char *argv[]) {
     loginWindow.show();
     app.exec();
 
-    std::cout << sessionUser << std::endl;
-    std::cout << "Returned from login" << std::endl;
-
     // upon successful login/registration, loginWindow will close and the mainUI will be rendered
     MainUI mainUI(sessionUser);
     mainUI.show();

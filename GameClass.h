@@ -8,8 +8,10 @@
 #include "StatsController.h"
 
 /**
- * @brief this is the header file for the GameClass object
+ * @brief A GameClass object represents the current state and progress of a player's TypeTrial game. It will keep track of various game statistics and information like time.
+ * It will also check if a user entered a correct/incorrect character and if the game is finished.
  * 
+ * @author Samuel Su (ssu53)
  */
 class GameClass {
     private:

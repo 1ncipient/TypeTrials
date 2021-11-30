@@ -11,21 +11,20 @@
 #include <iostream>
 
 /**
- * A LoginController which uses the DatabaseController parent,
- * contains functions and information necessary
- * for user login and registration
+ * @brief A LoginController which uses the DatabaseController parent, contains functions and information necessary for user login and registration
  * 
+ * @author Daniel Niu (yniu54)
  */
 class LoginController : public DatabaseController {
 
     private:
         /**
-         * boolean variable indicating whether a successful login has been performed 
+         * @brief boolean variable indicating whether a successful login has been performed 
          */
         bool    loginValid;
 
         /**
-        * Private function used to find whether a usrname/password string in the file specified by LoginController.
+        * @brief Private function used to find whether a usrname/password string in the file specified by LoginController.
         * 
         * @param target The strign to find
         * @param status 1 indicates we are looking for a username, 0 indicates a password
@@ -35,25 +34,25 @@ class LoginController : public DatabaseController {
 
     public:
         /**
-        * Constructor for a DatabaseController object that handles login functions
+        * @brief Constructor for a DatabaseController object that handles login functions
         *
         */
         LoginController();
 
         /**
-        * Empty destructor for a LoginController object
+        * @brief Empty destructor for a LoginController object
         */
         ~LoginController();
 
         /**
-        * Returns the current login status.
+        * @brief Returns the current login status.
         * 
         * @return Current login status
         */
         bool getStatus();
 
         /**
-        * Checks whether a valid username and pasword combo have been entered.
+        * @brief Checks whether a valid username and pasword combo have been entered.
         * 
         * @param username username to be checked
         * @param password password to be checked
@@ -62,7 +61,7 @@ class LoginController : public DatabaseController {
         bool login(std::string username, std::string password);
 
         /**
-        * Function called when registering a new user.
+        * @brief Function called when registering a new user.
         * 
         * @param username username to register
         * @param password password to register

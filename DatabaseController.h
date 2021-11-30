@@ -6,6 +6,7 @@
 /**
  * @brief A DatabaseController acting as the parent class for other classes that accesses/stores information, acting as a database
  * 
+ * @author Adrian Yung (ayung8)
  */
 class DatabaseController {
     protected:

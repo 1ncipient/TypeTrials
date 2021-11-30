@@ -9,6 +9,7 @@
 /**
  * @brief A StatsController, acting as the means to store and access user statistics
  * 
+ * @author Adrian Yung (ayung8)
  */
 class StatsController: public DatabaseController {
     protected:
